@@ -1,0 +1,108 @@
+*, *:before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main */
+main.container {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* PAGES FIRST, THEN COMPONENTS */
+
+/* Home page */
+
+
+/* Movie Details page */
+
+
+/* Team Page */
+.cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.bio {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+ img.bio {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+h3.bio  {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+a.bio  {
+  text-decoration: none;
+  color: #0077B5;
+  font-size: 16px;
+}
+
+p.bio  {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.bio-icon {
+  display: inline-block;
+  margin: 5px;
+  font-size: 24px;
+  color: #0077B5;
+}
+
+.bio-icon:hover {
+  color: #004471;
+}
+
+
+/* About Page */
+
+
+/* Error Page */
+
+
+/* Header */
+
+nav.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+nav.item{
+  display: inline;
+}
+
+
+/* Footer */
+
+/* Spinner */
+
+/* Search Filter */
