@@ -1,7 +1,7 @@
 const About = () => {
 
     return ( 
-        <section className="about-section">
+        <section className="max-w-6xl mx-auto flex flex-col items-center">
             About page
         </section>
      );

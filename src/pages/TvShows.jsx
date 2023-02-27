@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import Spinner from "../components/Spinner";
+import Spinner from "../components/Spinner"
 
-const MovieDetails = () => {
-    const [loading, setLoading] = useState(false);
+
+const TvShows = () => {
+    const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
         setLoading(true);
@@ -14,16 +15,17 @@ const MovieDetails = () => {
         setLoading(false);
     },[])
 
+
     return ( 
         <>
             { loading && <Spinner /> }
             { !loading && 
-            <section className="moviedetails-section">
-                <h2>Movie Details</h2>
+            <section className="max-w-6xl mx-auto flex flex-col items-center">
+                <h2>TvShows</h2>
             </section>
-            }
+            }      
         </>
      );
 }
  
-export default MovieDetails;
+export default TvShows;
