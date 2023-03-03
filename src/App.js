@@ -9,7 +9,10 @@ import Error from './pages/Error';
 import FAQ from './pages/FAQ';
 import Movies from './pages/Movies';
 import TvShows from './pages/TvShows';
-import MovieDetails from './pages/Movie';
+import MovieDetails from './pages/MovieDetails';
+import TvShowDetails from './pages/TvShowDetails';
+import Search from './pages/Search';
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
@@ -23,7 +26,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/movie-details/:id" element={<MovieDetails />} />
+            <Route path="/tv-show-details/:id" element={<TvShowDetails />} />
+            <Route path="/search/:id" element={<Search />} />
             <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
