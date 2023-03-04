@@ -1,10 +1,12 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchFilter from "./SearchFilter";
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return ( 
-        <header className="w-full bg-pink-400">
+        <header className="w-full shadow-md py-4">
             <nav className="max-w-6xl w-full mx-auto flex flex-row justify-between items-center">
                 <div className="flex flex-row items-center justify-start">
                     <Link to="/" className="mr-10"><img src={`/assets/netflix144.png`} alt="netflix" /></Link> 
@@ -13,8 +15,12 @@ const Header = () => {
                     <Link to="/movies" className="mx-3">Movies</Link>
 
                 </div>
-                <div className="">
+                <div className="flex flex-row items-center">
                     <SearchFilter />
+                    <button 
+                        className="px-4 py-1 bg-black text-white rounded-lg font-semibold"
+                        onClick={()=>navigate("/signin")}
+                    >Sign In</button>
                 </div> 
             </nav>    
         </header>
