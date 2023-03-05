@@ -2,26 +2,27 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from "../components/Spinner";
 import { FaStar, FaRegStar } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs';
 
 export default function Banner() {
 
+  const navigate = useNavigate(); 
+
     const [data, setData] = useState(null); 
-    const [counter, setCounter] = useState(1); 
+    const [counter, setCounter] = useState(0); 
     const [currMovie, setCurrMovie] = useState(null); 
-    const [display, setDisplay] = useState(false); 
     const [displayWhole, setDisplayWhole] = useState(false);
-    const [firstMovie, setFirstMovie] = useState(null);
     const [stars, setStars] = useState(null); 
-    const [average, setAverage] = useState(null);
+    const [average, setAverage] = useState(null); 
 
     useEffect(()=>{
         const getPopular = async ()=>{
             setDisplayWhole(false);
             const getData = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=09cbcde820a19e4959494fa25a97a645&page=1');
             setData(getData.data);
-            setCurrMovie(getData.data.results[1]); 
-            setFirstMovie(getData.data.results[0]); 
-            console.log(getData.data.results[0]); 
+            setCurrMovie(getData.data.results[0]); 
+            setAverage(Math.round(getData.data.results[0].vote_average / 2)); 
             setDisplayWhole(true);
         };
         getPopular().catch(err=>console.log(err));
@@ -29,15 +30,13 @@ export default function Banner() {
 
     useEffect(() => {
         const interval = setInterval(() => { 
-            setDisplay(true);
+            setAverage(Math.round(data.results[counter].vote_average / 2));
             setCurrMovie(data.results[counter]);
-            setAverage(Math.round(currMovie.vote_average / 2));
             setCounter(counter => counter + 1);
-            if(counter >= data.results.length){
-                setCounter(1);
-                setDisplay(false);
+            if(counter >= data.results.length - 1){
+                setCounter(0);
             }
-        }, 5000);
+        }, 6000);
         return () => clearInterval(interval);
       }, [counter, data, currMovie]);
 
@@ -54,19 +53,51 @@ export default function Banner() {
         }));
     },[average, counter]); 
 
+    //import { useSpring, animated as s} from 'react-spring';
+    // const springLeft = useSpring({
+    //   from: {left: -400, opacity: 0},
+    //   left: 0,
+    //   opacity: 1, 
+    //   config: {mass: 1, tension: 25, friction: 20}
+    // });
+    //style={{...springLeft}}
+
   return (
-    <div>
-        {(displayWhole)?<div className='w-screen h-screen relative bg-gradient-to-r from-black z-20 transition-all delay-150'>
-                <h1 className='absolute bottom-96 left-20 z-20 text-5xl text-white'>{(display) ? currMovie.title : firstMovie.title}</h1>
-                <p className='absolute bottom-72 left-20 z-20 text-white w-1/2'>{(display) ? currMovie.overview : firstMovie.overview}</p>
-                <h2 className='absolute bottom-56 left-20 z-20 text-3xl text-white'>{(display) ? currMovie.release_date : firstMovie.release_date}</h2>
-                <p className='flex absolute bottom-40 left-20 z-20'>{stars}</p>
-                <img src={`https://image.tmdb.org/t/p/original${(display) ? currMovie.backdrop_path : firstMovie.backdrop_path}`}
-                alt={(display) ? currMovie.title : firstMovie.title}
+    <div className='relative'>
+        {(displayWhole)?<div className='w-screen h-screen bg-gradient-to-r from-black z-20 cursor-pointer'
+                onClick={() => navigate(`/movie-details/${currMovie.id}`)}>
+                <div className='flex flex-col justify-around absolute top-40 left-20 z-20 h-1/2 mt-20'>
+                  <h1 className='text-5xl text-white'>{currMovie.title}</h1>
+                  <p className='text-white w-1/2'>{currMovie.overview}</p>
+                  <h2 className='text-3xl text-white'>{currMovie.release_date}</h2>
+                  <p className='flex'>{stars}</p>
+                </div>
+                <img src={`https://image.tmdb.org/t/p/original${currMovie.backdrop_path}`}
+                alt={currMovie.title}
                 className="w-screen h-screen mix-blend-overlay z-10" />
               </div>
             :<Spinner />
             }
+            <BsFillArrowLeftCircleFill onClick={()=>{
+              if(counter <= 0){
+                setCounter(data.results.length);
+              };
+              console.log('down');
+              setCounter(counter=>counter - 1);
+              console.log(counter); 
+              setCurrMovie(data.results[counter]);
+            }}
+              className='absolute left-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
+            <BsFillArrowRightCircleFill onClick={()=>{
+              if(counter >= data.results.length - 1){
+                setCounter(0);
+              };
+              console.log('up');
+              setCounter(counter=>counter + 1);
+              console.log(counter); 
+              setCurrMovie(data.results[counter]);
+            }}
+              className='absolute right-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
     </div>
   )
 }

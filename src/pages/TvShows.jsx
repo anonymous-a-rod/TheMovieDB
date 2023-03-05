@@ -41,18 +41,18 @@ const TvShows = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10">
             { selections?.length > 0 && selections.map((selection)=>
                 (
-                    <>
-                        <div key={selection.id}>
+                    <div key={selection.id}>
+                        <div>
                             <SelectionCard selection={selection} />
                         </div>
-                    </>     
+                    </div>     
                 )
             )}
             </div>
             }
             <div className="w-full flex justify-center my-10">
                 {pages && pages.map((index)=>{
-                    return <p 
+                    return <p key={index}
                             className="inline cursor-pointer mx-4"
                             onClick={()=>setPage(index)}
                             >

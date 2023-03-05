@@ -10,7 +10,6 @@ const Home = () => {
     return ( 
         <>
             <section className="max-w-6xl mx-auto flex flex-col items-center">
-                <h2>Home</h2>
                 <Banner />
                 <PreviewRow 
                     category={"trending"}
@@ -42,7 +41,7 @@ const Home = () => {
                     searchQuery={"/discover/movie"}
                     additionalQuery={"&with_genres=10749"}
                 />
-                <PreviewRow 
+                <PreviewRow
                     category={"documentaries"}
                     searchQuery={"/discover/movie"}
                     additionalQuery={"&with_genres=99"}
