@@ -17,8 +17,8 @@ const SelectionCard = ({selection}) => {
         }
     });
 
-    console.log(selection)
-    console.log("selection")
+    // console.log(selection)
+    // console.log("selection")
 
     return ( 
         <article

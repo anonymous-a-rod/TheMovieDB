@@ -20,7 +20,7 @@ const PreviewRow = ({category, searchQuery, additionalQuery}) => {
         setLoading(false);
     },[searchQuery, additionalQuery])
 
-    console.log(selections)
+    // console.log(selections)
 
 
     return ( 

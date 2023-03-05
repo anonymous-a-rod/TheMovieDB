@@ -1,13 +1,17 @@
+import Banner from "../components/Banner";
 import PreviewRow from "../components/PreviewRow";
 
 
 const Home = () => {
 
 
+
+
     return ( 
         <>
             <section className="max-w-6xl mx-auto flex flex-col items-center">
                 <h2>Home</h2>
+                <Banner />
                 <PreviewRow 
                     category={"trending"}
                     searchQuery={"trending/all/day"}

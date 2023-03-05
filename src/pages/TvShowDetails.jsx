@@ -24,11 +24,11 @@ const TvShowDetails = () => {
         
     },[param])
 
-    useEffect(()=>{
-        console.log(TvShowDetails)
-    },[TvShowDetails])
+    // useEffect(()=>{
+    //     console.log(TvShowDetails)
+    // },[TvShowDetails])
 
-    console.log(TvShowDetails)
+    // console.log(TvShowDetails)
     
 
     return ( 
