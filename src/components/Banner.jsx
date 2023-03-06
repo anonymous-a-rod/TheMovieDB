@@ -21,6 +21,7 @@ export default function Banner() {
             setDisplayWhole(false);
             const getData = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=09cbcde820a19e4959494fa25a97a645&page=1');
             setData(getData.data);
+            console.log(getData.data);
             setCurrMovie(getData.data.results[0]); 
             setAverage(Math.round(getData.data.results[0].vote_average / 2)); 
             setDisplayWhole(true);
@@ -32,13 +33,13 @@ export default function Banner() {
         const interval = setInterval(() => { 
             setAverage(Math.round(data.results[counter].vote_average / 2));
             setCurrMovie(data.results[counter]);
-            setCounter(counter => counter + 1);
+            setCounter(prev => prev + 1);
             if(counter >= data.results.length - 1){
                 setCounter(0);
             }
         }, 6000);
         return () => clearInterval(interval);
-      }, [counter, data, currMovie]);
+      }, [data, counter]);
 
       useEffect(()=>{
         // Create an array of stars to display
@@ -63,8 +64,8 @@ export default function Banner() {
     //style={{...springLeft}}
 
   return (
-    <div className='relative'>
-        {(displayWhole)?<div className='w-screen h-screen bg-gradient-to-r from-black z-20 cursor-pointer'
+    <div className='relative w-screen h-0 pb-[56.25%] mb-10'>
+        {(displayWhole)?<div className='absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-gradient-to-r from-black z-20 cursor-pointer'
                 onClick={() => navigate(`/movie-details/${currMovie.id}`)}>
                 <div className='flex flex-col justify-around absolute top-40 left-20 z-20 h-1/2 mt-20'>
                   <h1 className='text-5xl text-white'>{currMovie.title}</h1>
@@ -74,28 +75,32 @@ export default function Banner() {
                 </div>
                 <img src={`https://image.tmdb.org/t/p/original${currMovie.backdrop_path}`}
                 alt={currMovie.title}
-                className="w-screen h-screen mix-blend-overlay z-10" />
+                className="w-full h-full mix-blend-overlay z-10" />
               </div>
             :<Spinner />
             }
             <BsFillArrowLeftCircleFill onClick={()=>{
-              if(counter <= 0){
-                setCounter(data.results.length);
-              };
-              console.log('down');
-              setCounter(counter=>counter - 1);
-              console.log(counter); 
-              setCurrMovie(data.results[counter]);
+              if (counter <= 0) {
+                setCounter(data.results.length - 1);
+                setCurrMovie(data.results[data.results.length - 1]);
+                setAverage(Math.round(data.results[data.results.length - 1].vote_average / 2));
+              } else {
+                setCounter(prev => prev - 1);
+                setCurrMovie(data.results[counter - 1]);
+                setAverage(Math.round(data.results[counter - 1].vote_average / 2));
+              }
             }}
               className='absolute left-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
             <BsFillArrowRightCircleFill onClick={()=>{
-              if(counter >= data.results.length - 1){
+              if (counter >= data.results.length - 1) {
                 setCounter(0);
-              };
-              console.log('up');
-              setCounter(counter=>counter + 1);
-              console.log(counter); 
-              setCurrMovie(data.results[counter]);
+                setCurrMovie(data.results[0]);
+                setAverage(Math.round(data.results[0].vote_average / 2));
+              } else {
+                setCounter(prev => prev + 1);
+                setCurrMovie(data.results[counter + 1]);
+                setAverage(Math.round(data.results[counter + 1].vote_average / 2));
+              }
             }}
               className='absolute right-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
     </div>
