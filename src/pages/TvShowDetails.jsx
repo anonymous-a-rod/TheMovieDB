@@ -7,7 +7,7 @@ import Review from "../components/Review";
 
 const TvShowDetails = () => {
     const [loading, setLoading] = useState(false);
-    const [MovieDetails, setMovieDetails] = useState(null);
+    const [showDetails, setShowDetails] = useState(null);
     const [ReviewDetails, setReviewDetails] = useState(null);
     const [VideoDetails, setVideoDetails] = useState(null); 
     const [stars, setStars] = useState(null); 
@@ -24,15 +24,18 @@ const TvShowDetails = () => {
         const getData = async ()=>{
             setLoading(true);
             const getMovie = await axios.get(`https://api.themoviedb.org/3/tv/${param}?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
-            setMovieDetails(getMovie.data);
+            setShowDetails(getMovie.data);
             const getReview = await axios.get(`https://api.themoviedb.org/3/tv/${param}/reviews?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US&page=1`);
             setReviewDetails(getReview.data);
-            const getVideo = await axios.get(`https://api.themoviedb.org/3/tv/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
-            setVideoDetails(getVideo.data);
-            console.log(getVideo.data);
+            const getShow = await axios.get(`https://api.themoviedb.org/3/tv/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
+            setVideoDetails(getShow.data);
+            
+
+
+
             setAverage(Math.round(getMovie.data.vote_average / 2));
-            setTrailerSecondary((getVideo.data.results.length >= 1)?getVideo.data.results.filter((item, index)=>index === 0):null);
-            setTrailer(getVideo.data.results.filter(item=>item.name === 'Official Trailer'));
+            setTrailerSecondary((getShow.data.results.length >= 1)?getShow.data.results.filter((item, index)=>index === 0):null);
+            setTrailer(getShow.data.results.filter(item=>item.name === 'Official Trailer'));
             setLoading(false);
         }
         getData().catch(err=>console.log(err));  
@@ -57,7 +60,7 @@ const TvShowDetails = () => {
     return ( 
         <>
             { loading && <Spinner /> }
-            { !loading && MovieDetails && 
+            { !loading && showDetails && 
             <section className="">
                 <div className={(VideoDetails.results.length > 0)?"relative pt-[56.25%] border-4":'h-10'}>
                 <div className={(VideoDetails.results.length > 0)?"absolute top-0 left-0 right-0 bottom-0 border-4":'relative'}>
@@ -75,24 +78,24 @@ const TvShowDetails = () => {
                 <div>
                     <div className="flex m-20">
                         <img
-                            src={`https://image.tmdb.org/t/p/original${MovieDetails.poster_path}`}
-                            alt={MovieDetails.name}
+                            src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
+                            alt={showDetails.name}
                             className="w-72 h-82 object-cover"
                         />
                         <div className="flex flex-col justify-around m-10">
-                            <h2 className="text-2xl">{MovieDetails.name}</h2>
+                            <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className="flex">
                                 {
-                                    MovieDetails.genres.map((item)=>{
+                                    showDetails.genres.map((item)=>{
                                         return <p key={item.name} className='flex mr-2'>
                                                     {item.name}
                                                 </p>
                                     })
                                 }
                             </div>
-                            <p>{MovieDetails.seasons.length} Seasons</p>
-                            <p>{MovieDetails.overview}</p>
+                            <p>{showDetails.seasons.length} Seasons</p>
+                            <p>{showDetails.overview}</p>
                         </div>
                     </div>
                     <div>

@@ -13,6 +13,11 @@ import MovieDetails from './pages/MovieDetails';
 import TvShowDetails from './pages/TvShowDetails';
 import Search from './pages/Search';
 import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -27,6 +32,9 @@ function App() {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/team" element={<Team />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/movie-details/:id" element={<MovieDetails />} />
             <Route path="/tv-show-details/:id" element={<TvShowDetails />} />
             <Route path="/search/:id" element={<Search />} />
@@ -34,7 +42,18 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-      
+      <ToastContainer
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark"
+                />
     </main>
   );
 }
