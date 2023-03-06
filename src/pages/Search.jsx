@@ -25,9 +25,9 @@ const Search = () => {
         
     },[param])
 
-    useEffect(()=>{
-        console.log(selections)
-    },[selections])
+    // useEffect(()=>{
+    //     console.log(selections)
+    // },[selections])
     
 
     return ( 

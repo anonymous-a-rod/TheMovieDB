@@ -20,7 +20,7 @@ const PreviewRow = ({category, searchQuery, additionalQuery}) => {
         setLoading(false);
     },[searchQuery, additionalQuery])
 
-    console.log(selections)
+    // console.log(selections)
 
 
     return ( 
@@ -29,14 +29,14 @@ const PreviewRow = ({category, searchQuery, additionalQuery}) => {
             { !loading && 
             <div className="max-w-6xl mx-auto flex flex-col items-center">
                 <h2 className="text-4xl font-bold capitalize mb-4 w-full text-left">{category}</h2>
-                <div className="flex flex-row overflow-hidden">
+                <div className='w-screen flex overflow-scroll overflow-y-hidden my-5'>
                 { selections?.length > 0 && selections.map((selection)=>
                     (
-                        <>
-                            <div key={selection.id}>
+                        <div key={selection.id}>
+                            <div>
                                 <SelectionCard selection={selection} />
                             </div>
-                        </>     
+                        </div>     
                     )
                 )}
                 </div>
