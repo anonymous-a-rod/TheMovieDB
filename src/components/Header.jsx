@@ -10,6 +10,8 @@ const Header = () => {
     const [user, setUser] = useState(null);
     const [pageState, setPageState] = useState("Sign in");
 
+    console.log(user)
+    
     useEffect(()=>{
         onAuthStateChanged(auth, user => {
             if(user){
