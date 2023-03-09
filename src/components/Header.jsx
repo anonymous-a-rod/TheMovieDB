@@ -40,7 +40,7 @@ const Header = () => {
                 <div className="flex flex-row items-center">
                     <SearchFilter />
                     <button 
-                        className="px-4 py-1 bg-black text-white rounded-lg font-semibold"
+                        className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
                         onClick={()=>navigate(pageState === "Sign in"? "/signin" : "/profile")}
                     >{pageState}</button>
                 </div> 

@@ -32,7 +32,7 @@ const SearchFilter = () => {
                 className="absolute right-[18px] top-[8px]"
                 onClick={handleSearchSubmit}
             >
-                <FaSearch />
+                <FaSearch className="text-black"/>
             </button>
         </div>
      );

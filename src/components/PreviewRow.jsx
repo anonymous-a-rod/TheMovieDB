@@ -1,7 +1,7 @@
 import SelectionCard from "./SelectionCard";
 import Spinner from "./Spinner";
 import React, { useState, useEffect } from 'react';
-import { BsArrowLeftSquare, BsArrowRightSquare } from 'react-icons/bs';
+import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs';
 
 const PreviewRow = ({category, searchQuery, additionalQuery}) => {
   const [loading, setLoading] = useState(true);
@@ -49,10 +49,10 @@ const PreviewRow = ({category, searchQuery, additionalQuery}) => {
       { loading && <Spinner /> }
       { !loading && 
         <div className="w-screen flex flex-col items-center relative">
-          <h2 className="text-4xl font-bold capitalize mb-4 w-full text-left">{category}</h2>
-          <div className='w-full flex overflow-scroll overflow-y-hidden my-5 border-2 z-10' id={category} onScroll={handleScroll}>
-            <BsArrowRightSquare className={showRight ? "absolute right-0 top-1/2 -translate-y-1/2 z-20 h-20 w-20" : "hidden"} onClick={handleScrollRight} />
-            <BsArrowLeftSquare className={showLeft ? "absolute left-0 top-1/2 -translate-y-1/2 z-20 h-20 w-20" : "hidden"} onClick={handleScrollLeft} />
+          <h2 className="text-4xl font-bold capitalize mb-4 w-full text-left ml-20">{category}</h2>
+          <div className='w-full flex overflow-scroll overflow-y-hidden my-5 z-10 p-2' id={category} onScroll={handleScroll}>
+            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={handleScrollRight} />
+            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={handleScrollLeft} />
             { selections?.length > 0 && selections.map((selection) =>
               (
                 <div key={selection.id}>

@@ -4,6 +4,7 @@ import Spinner from "../components/Spinner";
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import axios from "axios";
 import Review from "../components/Review";
+import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs';
 
 const MovieDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -18,6 +19,9 @@ const MovieDetails = () => {
     const [credits, setCredits] = useState(null);
     const [recommendations, setRecommendations] = useState(null);
     const [similar, setSimilar] = useState(null);
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [showLeft, setShowLeft] = useState(false);
+    const [showRight, setShowRight] = useState(true);
 
     const param = useParams().id;
 
@@ -68,7 +72,28 @@ const MovieDetails = () => {
         }));
     },[average]); 
     
+    const handleScrollRight = (type) => {
+        const container = document.getElementById(type);
+        const containerWidth = container.offsetWidth;
+        container.scrollBy({ left: containerWidth, behavior: 'smooth' });
+        setScrollPosition(container.scrollLeft + containerWidth);
+      };
     
+      const handleScrollLeft = (type) => {
+        const container = document.getElementById(type);
+        const containerWidth = container.offsetWidth;
+        container.scrollBy({ left: -containerWidth, behavior: 'smooth' });
+        setScrollPosition(container.scrollLeft - containerWidth); 
+        console.log(scrollPosition);
+      };
+    
+      const handleScroll = (type) => {
+        console.log(type); 
+        const container = document.getElementById(type);
+        const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+        setShowLeft(container.scrollLeft > 0);
+        setShowRight(container.scrollLeft < maxScrollPosition - 100);
+      };
 
     return ( 
         <>
@@ -128,34 +153,94 @@ const MovieDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <h3 className={(credits?.cast.length > 0)?"text-center text-3xl":'hidden'}>Top cast</h3>
-                        <p>map all in credits.cast</p>
+                        <h3 className={(credits?.cast.length > 0)?"text-center text-3xl mb-10":'hidden'}>Cast</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center m-10">
+                        {
+                            credits.cast.map((item)=>{
+                                return(
+                                    <div className={(item.profile_path !== null)?"flex flex-col justify-center items-center":'hidden'}>
+                                        <p className="text-xl mb-5">{item.character}: {item.name}</p>
+                                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
+                                        className='w-60 h-70' />
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
                     </div>
+
                     <div>
-                        <h3 className={(credits?.crew.length > 0)?"text-center text-3xl":'hidden'}>All crew & cast</h3>
-                        <p>map all in credits.crew</p>
+                        <h3 className={(credits?.crew.length > 0)?"text-center text-3xl":'hidden'}>Crew</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center m-10">
+                        {
+                            credits.crew.map((item)=>{
+                                return(
+                                    <div className={(item.profile_path !== null)?"flex flex-col justify-center items-center":'hidden'}>
+                                        <p className="text-xl mb-5">{item.department}: {item.name}</p>
+                                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
+                                        className='w-60 h-70' />
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
                     </div>
+
                     <div>
-                        <h3 className={(recommendations?.length > 0)?"text-center text-3xl":'hidden'}>Recommendations</h3>
-                        <p>map all in recommendations</p>
+                        <h3 className={(recommendations?.length > 0)?"text-center text-3xl mb-10":'hidden'}>Recommendations</h3>
+                        <div className="relative">
+                        <div className="flex overflow-scroll gap-2" id='recommendations' onScroll={()=>handleScroll('recommendations')}>
+                            {
+                                recommendations && recommendations.map((item)=>{
+                                    return(
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                                            alt={item.title}
+                                            className="w-50 h-60"
+                                        />
+                                    )
+                                })
+                            }
+                            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollRight('recommendations')} />
+                            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollLeft('recommendations')} />
+                        </div>
+                        </div>
                     </div>
-                    <div>
+
+                    <div className="relative">
                         <h3 className={(similar?.length > 0)?"text-center text-3xl":'hidden'}>More like this</h3>
-                        <p>map all in similar</p>
+                        <div className="flex overflow-scroll gap-2" id='similar' onScroll={()=>handleScroll('similar')}>
+                            {
+                                similar && similar.map((item)=>{
+                                    return(
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                                            alt={item.title}
+                                            className="w-50 h-60"
+                                        />
+                                    )
+                                })
+                            }
+                            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollRight('similar')} />
+                            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollLeft('similar')} />
+                        </div>
                     </div>
+
                     <div>
                         <h3 className={"text-center text-3xl"}>Details</h3>
                         <p>Release date: {MovieDetails.release_date}</p>
-                        <p>Orginal language: {MovieDetails.original_language}</p>
+                        <p>Original language: {MovieDetails.original_language}</p>
                         <p>Runtime: {MovieDetails.runtime}</p>
                         <p>Status: {MovieDetails.status}</p>
                         <p>Rating: {MovieDetails.vote_average}/10</p>
                     </div>
+
                     <div>
                         <h3 className={"text-center text-3xl"}>Box office</h3>
                         <p>Budget: {MovieDetails.budget}</p>
                         <p>Revenue: {MovieDetails.revenue}</p>
                     </div>
+                    
                     <div>
                         <h3 className={"text-center text-3xl"}>Production</h3>
                         <p>Production Companies: map all in moviedetails</p>

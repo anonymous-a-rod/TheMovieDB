@@ -29,10 +29,6 @@ const TvShowDetails = () => {
             setReviewDetails(getReview.data);
             const getShow = await axios.get(`https://api.themoviedb.org/3/tv/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
             setVideoDetails(getShow.data);
-            
-
-
-
             setAverage(Math.round(getMovie.data.vote_average / 2));
             setTrailerSecondary((getShow.data.results.length >= 1)?getShow.data.results.filter((item, index)=>index === 0):null);
             setTrailer(getShow.data.results.filter(item=>item.name === 'Official Trailer'));
