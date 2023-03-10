@@ -25,9 +25,11 @@ const Movies = () => {
         
     },[page])
 
-    // useEffect(()=>{
-    //     console.log(selections)
-    // },[selections])
+    const handlePageChange = (index) => {
+        setPage(index)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
 
 
     return ( 
@@ -36,7 +38,7 @@ const Movies = () => {
             { loading && <Spinner /> }
             <h1 className="text-6xl w-full text-center my-10">Popular Movies</h1>
             { !loading && selections && 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10 ">
             { selections?.length > 0 && selections.map((selection)=>
                 (
                     <div key={selection.id}>
@@ -51,8 +53,8 @@ const Movies = () => {
             <div className="w-full flex justify-center my-10">
                 {pages && pages.map((index)=>{
                     return <p key={index}
-                            className="inline cursor-pointer mx-4"
-                            onClick={()=>setPage(index)}
+                            className={`inline cursor-pointer text-lg mx-4 ${page === (index+1)? "text-red-600":"hover:opacity-70"}`}
+                            onClick={()=>handlePageChange(index+1)}
                             >
                                 {index}
                             </p>

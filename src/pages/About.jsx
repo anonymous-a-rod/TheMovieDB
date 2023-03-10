@@ -1,9 +1,9 @@
 const About = () => {
 
     return ( 
-        <section className="max-w-6xl mx-auto flex flex-col items-center">
-            <div className="bg-white rounded-lg shadow-lg p-8 my-10">
-                <h2 className="text-2xl font-bold mb-4">About CineTrail</h2>
+        <section className="max-w-6xl mx-auto flex flex-col items-center ">
+            <div className="bg-gray-200 rounded-lg shadow-lg p-8 my-10">
+                <h2 className="text-2xl font-bold mb-4 text-gray-800">About CineTrail</h2>
                 <p className="text-gray-700 leading-relaxed">
                     CineTrail is your go-to destination for all things movies. Whether you're looking for the latest reviews, previews, or ratings, or you just want to browse our extensive library of films, we've got you covered.
                 </p>
