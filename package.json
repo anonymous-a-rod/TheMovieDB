@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "postcss-scrollbar": "^0.5.1",
     "tailwindcss": "^3.2.7"
   }
 }

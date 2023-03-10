@@ -4,6 +4,7 @@ import Spinner from "../components/Spinner";
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import axios from "axios";
 import Review from "../components/Review";
+import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs';
 
 const TvShowDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -15,8 +16,25 @@ const TvShowDetails = () => {
     const [trailer, setTrailer] = useState(null);
     const [trailerSecondary, setTrailerSecondary] = useState(null);
     const [showWhole, setShowWhole] = useState(false);
+    const [credits, setCredits] = useState(null);
+    const [recommendations, setRecommendations] = useState(null);
+    const [similar, setSimilar] = useState(null);
+    const [showLeft, setShowLeft] = useState(false);
+    const [showRight, setShowRight] = useState(true);
+    const [showCast, setShowCast] = useState(false); 
+    const [showCrew, setShowCrew] = useState(false); 
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     const param = useParams().id;
+
+    console.log("movie details")
+    console.log(showDetails)
+    console.log("credits")
+    console.log(credits)
+    console.log("recommendations")
+    console.log(recommendations)
+    console.log("similar")
+    console.log(similar)
 
     console.log(param)
 
@@ -29,10 +47,12 @@ const TvShowDetails = () => {
             setReviewDetails(getReview.data);
             const getShow = await axios.get(`https://api.themoviedb.org/3/tv/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
             setVideoDetails(getShow.data);
-            
-
-
-
+            const getCredits = await axios.get(`https://api.themoviedb.org/3/tv/${param}/credits?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
+            setCredits(getCredits.data);
+            const getRecommendations = await axios.get(`https://api.themoviedb.org/3/tv/${param}/recommendations?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
+            setRecommendations(getRecommendations.data.results);
+            const getSimilar = await axios.get(`https://api.themoviedb.org/3/tv/${param}/similar?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
+            setSimilar(getSimilar.data.results);
             setAverage(Math.round(getMovie.data.vote_average / 2));
             setTrailerSecondary((getShow.data.results.length >= 1)?getShow.data.results.filter((item, index)=>index === 0):null);
             setTrailer(getShow.data.results.filter(item=>item.name === 'Official Trailer'));
@@ -54,6 +74,29 @@ const TvShowDetails = () => {
             }
         }));
     },[average]); 
+
+    const handleScrollRight = (type) => {
+        const container = document.getElementById(type);
+        const containerWidth = container.offsetWidth;
+        container.scrollBy({ left: containerWidth, behavior: 'smooth' });
+        setScrollPosition(container.scrollLeft + containerWidth);
+      };
+    
+      const handleScrollLeft = (type) => {
+        const container = document.getElementById(type);
+        const containerWidth = container.offsetWidth;
+        container.scrollBy({ left: -containerWidth, behavior: 'smooth' });
+        setScrollPosition(container.scrollLeft - containerWidth); 
+      };
+    
+      const handleScroll = (type) => {
+        console.log(type); 
+        const container = document.getElementById(type);
+        const maxScrollPosition = container.scrollWidth - container.offsetWidth;
+        setShowLeft(container.scrollLeft > 0);
+        setShowRight(container.scrollLeft < maxScrollPosition - 100);
+        console.log(scrollPosition);
+      };
     
     
 
@@ -96,6 +139,7 @@ const TvShowDetails = () => {
                             </div>
                             <p>{showDetails.seasons.length} Seasons</p>
                             <p>{showDetails.overview}</p>
+                            <p>{showDetails.type}</p>
                         </div>
                     </div>
                     <div>
@@ -104,7 +148,7 @@ const TvShowDetails = () => {
                             {(ReviewDetails.results.length > 0)?ReviewDetails.results.map(item=>{
                                     return <Review key={item.content} item={item} />
                                 })
-                                :<p className="flex justify-center items-start text-4xl h-72">No Reviews</p>
+                                :<p className="flex justify-center items-start text-4xl">No Reviews</p>
                             }
                         </div>
                         <div>
@@ -114,6 +158,108 @@ const TvShowDetails = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className={(credits?.cast.length > 0)?'relative mb-10':'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>Cast</h3>
+                        <div className={(showCast)?'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center' :'h-[425px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center overflow-hidden mb-20'}>
+                        {
+                            credits.cast.map((item)=>{
+                                return(
+                                    <div className={(item.profile_path !== null)?"flex flex-col justify-center items-center":'hidden'}>
+                                        <p className="text-xl mb-5">{item.character}: {item.name}</p>
+                                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
+                                        className='w-60 h-70' />
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
+                        <div className={(credits?.cast.length >= 4)?"absolute bottom-[-40px] right-10":'hidden'}>
+                            <p className="text-2xl" onClick={()=>setShowCast(!showCast)}>{(showCast)?'Show less cast...':'Show more cast...'}</p>
+                        </div>
+                    </div>
+
+                    <div className={(credits?.crew.length > 0)?'relative mb-10':'hidden'}>
+                        <h3 className="text-center text-3xl">Crew</h3>
+                        <div className={(showCrew)?"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center":'h-[425px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center overflow-hidden mb-20'}>
+                        {
+                            credits.crew.map((item)=>{
+                                return(
+                                    <div className={(item.profile_path !== null)?"flex flex-col justify-center items-center":'hidden'}>
+                                        <p className="text-xl mb-5">{item.department}: {item.name}</p>
+                                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
+                                        className='w-60 h-70' />
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
+                        <div className={(credits?.crew.length >= 4)?"absolute bottom-[-40px] right-10":'hidden'}>
+                            <p className="text-2xl" onClick={()=>setShowCrew(!showCrew)}>{(showCrew)?'Show less crew...':'Show more crew...'}</p>
+                        </div>
+                    </div>
+
+                    <div className={(recommendations?.length > 0)?"m-5":'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>Recommendations</h3>
+                        <div className="relative">
+                        <div className="flex overflow-scroll gap-2" id='recommendations' onScroll={()=>handleScroll('recommendations')}>
+                            {
+                                recommendations && recommendations.map((item)=>{
+                                    return(
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                                            alt={item.title}
+                                            className="w-50 h-60"
+                                        />
+                                    )
+                                })
+                            }
+                            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollRight('recommendations')} />
+                            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollLeft('recommendations')} />
+                        </div>
+                        </div>
+                    </div>
+
+                    <div className={(similar?.length > 0)?"my-10":'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>More like this</h3>
+                        <div className="relative flex overflow-scroll gap-2" id='similar' onScroll={()=>handleScroll('similar')}>
+                            {
+                                similar && similar.map((item)=>{
+                                    return(
+                                        <img
+                                            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                                            alt={item.title}
+                                            className="w-50 h-60"
+                                        />
+                                    )
+                                })
+                            }
+                            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollRight('similar')} />
+                            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80" : "hidden"} onClick={()=>handleScrollLeft('similar')} />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center text-2xl gap-5 mt-20">
+                        <h3 className={"text-center text-3xl"}>Details</h3>
+                        <p>Release date: {showDetails.first_air_date}</p>
+                        <p>Original language: {showDetails.original_language}</p>
+                        <p>Runtime: {showDetails.episode_run_time}</p>
+                        <p>Status: {showDetails.status}</p>
+                        <p>Rating: {showDetails.vote_average}/10</p>
+                    </div>
+                    <div className="my-20">
+                        <h3 className="text-center text-3xl mb-5">Box office</h3>
+                        <div className="flex gap-10 justify-center text-2xl">
+                            <p>Budget: {showDetails.budget}</p>
+                            <p>Revenue: {showDetails.revenue}</p>
+                        </div>
+                    </div>
+                    
+                    <div className="mt-20">
+                        <h3 className={"text-center text-3xl"}>Production</h3>
+                        <p>Production Companies: map all in showDetails</p>
+                        <p>Proudction Companies: map all in showDetails</p>
+                    </div>
             </section>
             }
         </>

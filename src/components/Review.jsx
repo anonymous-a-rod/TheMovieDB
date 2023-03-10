@@ -7,7 +7,7 @@ export default function Review({item}) {
 
   return (
     <div>
-        <div key={item.id} className='flex items-center mb-5 bg-stone-400 p-2'>
+        <div key={item.id} className='flex items-center mb-5 p-2'>
             <div className="flex items-center flex-col mr-20 w-20">
                 {(item.author_details.avatar_path !== null)
                     ?<img src={(item.author_details.avatar_path.includes('/https:'))?`${item.author_details.avatar_path.substring(1)}`:`https://image.tmdb.org/t/p/w500${item.author_details.avatar_path}`} 
@@ -19,7 +19,7 @@ export default function Review({item}) {
                 }
                 <h4 className="w-20 text-center mt-2">{item.author}</h4>
             </div>
-            <div className="relative w-full">
+            <div className="relative w-full text-lg">
                 {(showMore)?<BsBoxArrowUp  onClick={()=>setShowMore(!showMore)} 
                 className='w-5 h-5 absolute bottom-0 right-5' />
                 :<BsBoxArrowDown onClick={()=>setShowMore(!showMore)} 
