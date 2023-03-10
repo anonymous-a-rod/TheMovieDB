@@ -22,6 +22,8 @@ const MovieDetails = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(true);
+    const [showCast, setShowCast] = useState(false); 
+    const [showCrew, setShowCrew] = useState(false); 
 
     const param = useParams().id;
 
@@ -84,7 +86,6 @@ const MovieDetails = () => {
         const containerWidth = container.offsetWidth;
         container.scrollBy({ left: -containerWidth, behavior: 'smooth' });
         setScrollPosition(container.scrollLeft - containerWidth); 
-        console.log(scrollPosition);
       };
     
       const handleScroll = (type) => {
@@ -93,6 +94,7 @@ const MovieDetails = () => {
         const maxScrollPosition = container.scrollWidth - container.offsetWidth;
         setShowLeft(container.scrollLeft > 0);
         setShowRight(container.scrollLeft < maxScrollPosition - 100);
+        console.log(scrollPosition);
       };
 
     return ( 
@@ -137,6 +139,7 @@ const MovieDetails = () => {
                             </div>
                         </div>
                     </div>
+
                     <div>
                         <h3 className={(ReviewDetails?.results.length > 0)?"text-center text-3xl":'hidden'}>Reviews</h3>
                         <div className={(showWhole)?'mx-20 mt-10':'mx-20 mt-10 h-72 overflow-hidden'}>
@@ -152,9 +155,10 @@ const MovieDetails = () => {
                             </p>
                         </div>
                     </div>
-                    <div>
-                        <h3 className={(credits?.cast.length > 0)?"text-center text-3xl mb-10":'hidden'}>Cast</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center m-10">
+
+                    <div className={(credits?.cast.length > 0)?'relative mb-10':'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>Cast</h3>
+                        <div className={(showCast)?'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center' :'h-[425px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center overflow-hidden mb-20'}>
                         {
                             credits.cast.map((item)=>{
                                 return(
@@ -167,11 +171,14 @@ const MovieDetails = () => {
                             })
                         }
                         </div>
+                        <div className={(credits?.cast.length >= 4)?"absolute bottom-[-40px] right-10":'hidden'}>
+                            <p className="text-2xl" onClick={()=>setShowCast(!showCast)}>{(showCast)?'Show less cast...':'Show more cast...'}</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <h3 className={(credits?.crew.length > 0)?"text-center text-3xl":'hidden'}>Crew</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center m-10">
+                    <div className={(credits?.crew.length > 0)?'relative mb-10':'hidden'}>
+                        <h3 className={"text-center text-3xl"}>Crew</h3>
+                        <div className={(showCrew)?"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center":'h-[425px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center overflow-hidden mb-20'}>
                         {
                             credits.crew.map((item)=>{
                                 return(
@@ -184,10 +191,13 @@ const MovieDetails = () => {
                             })
                         }
                         </div>
+                        <div className={(credits?.crew.length >= 4)?"absolute bottom-[-40px] right-10":'hidden'}>
+                            <p className="text-2xl" onClick={()=>setShowCrew(!showCrew)}>{(showCrew)?'Show less crew...':'Show more crew...'}</p>
+                        </div>
                     </div>
 
-                    <div>
-                        <h3 className={(recommendations?.length > 0)?"text-center text-3xl mb-10":'hidden'}>Recommendations</h3>
+                    <div className={(recommendations?.length > 0)?'my-5':'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>Recommendations</h3>
                         <div className="relative">
                         <div className="flex overflow-scroll gap-2" id='recommendations' onScroll={()=>handleScroll('recommendations')}>
                             {
@@ -207,9 +217,9 @@ const MovieDetails = () => {
                         </div>
                     </div>
 
-                    <div className="relative">
-                        <h3 className={(similar?.length > 0)?"text-center text-3xl":'hidden'}>More like this</h3>
-                        <div className="flex overflow-scroll gap-2" id='similar' onScroll={()=>handleScroll('similar')}>
+                    <div className={(similar?.length > 0)?"my-10":'hidden'}>
+                        <h3 className={"text-center text-3xl mb-10"}>More like this</h3>
+                        <div className="relative flex overflow-scroll gap-2" id='similar' onScroll={()=>handleScroll('similar')}>
                             {
                                 similar && similar.map((item)=>{
                                     return(
@@ -226,7 +236,7 @@ const MovieDetails = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className="flex flex-col justify-center items-center text-2xl gap-5 mt-20">
                         <h3 className={"text-center text-3xl"}>Details</h3>
                         <p>Release date: {MovieDetails.release_date}</p>
                         <p>Original language: {MovieDetails.original_language}</p>
@@ -234,14 +244,15 @@ const MovieDetails = () => {
                         <p>Status: {MovieDetails.status}</p>
                         <p>Rating: {MovieDetails.vote_average}/10</p>
                     </div>
-
-                    <div>
-                        <h3 className={"text-center text-3xl"}>Box office</h3>
-                        <p>Budget: {MovieDetails.budget}</p>
-                        <p>Revenue: {MovieDetails.revenue}</p>
+                    <div className="my-20">
+                        <h3 className="text-center text-3xl mb-5">Box office</h3>
+                        <div className="flex gap-10 justify-center text-2xl">
+                            <p>Budget: {MovieDetails.budget}</p>
+                            <p>Revenue: {MovieDetails.revenue}</p>
+                        </div>
                     </div>
                     
-                    <div>
+                    <div className="mt-20">
                         <h3 className={"text-center text-3xl"}>Production</h3>
                         <p>Production Companies: map all in moviedetails</p>
                         <p>Proudction Companies: map all in moviedetails</p>
