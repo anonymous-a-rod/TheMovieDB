@@ -75,7 +75,7 @@ export default function Banner() {
                 </div>
                 <img src={`https://image.tmdb.org/t/p/original${currMovie.backdrop_path}`}
                 alt={currMovie.title}
-                className="w-full h-full mix-blend-overlay z-10" />
+                className="w-full h-full mix-blend-overlay z-10 object-fit object-cover" />
               </div>
             :<Spinner />
             }
@@ -90,7 +90,7 @@ export default function Banner() {
                 setAverage(Math.round(data.results[counter - 1].vote_average / 2));
               }
             }}
-              className='absolute left-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
+              className='absolute left-5 top-1/2 h-10 w-10 z-30 text-red-700 cursor-pointer'/>
             <BsFillArrowRightCircleFill onClick={()=>{
               if (counter >= data.results.length - 1) {
                 setCounter(0);
@@ -102,7 +102,7 @@ export default function Banner() {
                 setAverage(Math.round(data.results[counter + 1].vote_average / 2));
               }
             }}
-              className='absolute right-5 top-1/2 h-10 w-10 z-30 text-red-700'/>
+              className='absolute right-5 top-1/2 h-10 w-10 z-30 text-red-700 cursor-pointer'/>
     </div>
   )
 }

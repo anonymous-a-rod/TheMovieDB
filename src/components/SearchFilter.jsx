@@ -19,9 +19,9 @@ const SearchFilter = () => {
       };
 
     return ( 
-        <div className="relative">
+        <div className="relative ">
             <input
-                className="w-64 h-8 rounded-md indent-2 pl-1 mr-3 focus:outline-none border"
+                className="w-64 h-8 rounded-md indent-2 pl-1 mr-3 focus:outline-none border text-gray-800 bg-gray-100"
                 type="text"
                 placeholder="Search a Movie" 
                 value={searchInput}

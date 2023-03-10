@@ -6,26 +6,40 @@ const Team = () => {
 
 
     return ( 
-        <section className="max-w-6xl mx-auto">
-            <h2 className="text-4xl w-full text-center pb-10">Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {data.map((item) => (
-                <article className="bg-white rounded-lg shadow-md text-center cursor-pointer">
-                    <img src={item.pictureURL} alt={item.name} className="w-full h-64 object-cover rounded-t-lg" />
-                    <div className="p-6">
-                    <h3 className="text-xl font-medium mb-2">{item.name}</h3>
-                    <a href={item.websiteHref} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">{item.website}</a>
-                    <p className="text-gray-600 mt-2">{item.bio}</p>
-                    <div className="mt-4 flex flex-row mx-auto justify-center">
-                        <a href={item.linkedIn} className="text-gray-600 hover:text-blue-500 mr-4" target="_blank" rel="noreferrer"><FaLinkedin /></a>
-                        <a href={item.github} className="text-gray-600 hover:text-blue-500 mr-4" target="_blank" rel="noreferrer"><FaGithub /></a>
-                        <a href={item.websiteHref} className="text-gray-600 hover:text-blue-500" target="_blank" rel="noreferrer"><FaLink /></a>         
-                    </div>
-                    </div>
-                </article>
-                ))}
+        <section className='max-w-6xl mx-auto flex flex-col justify-center items-center'>
+      <h2 className='w-full text-gray-200 text-center text-4xl my-16 font-semibold'>
+        Our Team
+      </h2>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-8'>
+        {data.map((item, index) => (
+          <article className='bg-gray-200 mb-10 shadow-lg rounded-lg overflow-hidden max-w-xs relative' key={index}>
+          <img src={item.pictureURL} alt={item.name} className='mx-auto h-48 w-full object-cover shadow-lg' />
+          <div className='py-4 px-6 pb-14 text-center'>
+            <h3 className='text-xl text-gray-800 mb-2 font-semibold'>{item.name}</h3>
+            <a href={item.websiteHref} target='_blank' rel='noreferrer' className='text-blue-500 hover:text-blue-700 text-sm mb-2 block'>
+              {item.website}
+            </a>
+            <p className='text-stone-700 text-sm'>{item.bio}</p>
+          </div>
+          <div className='absolute bottom-0 left-0 right-0 mb-4'>
+            <div className='flex justify-center items-center w-full text-center'>
+              <a href={item.linkedIn} className='text-gray-700 hover:text-blue-600 text-md mx-2'>
+                <FaLinkedin />
+              </a>
+              <a href={item.github} className='text-gray-700 hover:text-blue-600 text-md mx-2'>
+                <FaGithub />
+              </a>
+              <a href={item.websiteHref} className='text-gray-700 hover:text-blue-600 text-md mx-2'>
+                <FaLink />
+              </a>
             </div>
-        </section>
+          </div>
+        </article>
+        
+        ))}
+      </div>
+    </section>
+
 
      );
 }
