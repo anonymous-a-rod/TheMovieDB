@@ -38,7 +38,7 @@ const Movies = () => {
             { loading && <Spinner /> }
             <h1 className="text-6xl w-full text-center my-10">Popular Movies</h1>
             { !loading && selections && 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10 ">
             { selections?.length > 0 && selections.map((selection)=>
                 (
                     <div key={selection.id}>

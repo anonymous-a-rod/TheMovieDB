@@ -65,11 +65,12 @@ export default function Banner() {
 
   return (
     <div className='relative w-screen h-0 pb-[56.25%] mb-10'>
-        {(displayWhole)?<div className='absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-gradient-to-r from-black z-20 cursor-pointer'
-                onClick={() => navigate(`/movie-details/${currMovie.id}`)}>
+        {(displayWhole)?<div className='absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-gradient-to-r from-black z-20 '
+                >
                 <div className='flex flex-col justify-around absolute top-40 left-20 z-20 h-1/2 mt-20'>
                   <h1 className='text-5xl text-white'>{currMovie.title}</h1>
-                  <p className='text-white w-1/2'>{currMovie.overview}</p>
+                  <p className='text-white w-1/2 truncate'>{currMovie.overview}</p>
+                  <p className='text-red-600 cursor-pointer' onClick={() => navigate(`/movie-details/${currMovie.id}`)}>See more</p>
                   <h2 className='text-3xl text-white'>{currMovie.release_date}</h2>
                   <p className='flex'>{stars}</p>
                 </div>

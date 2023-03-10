@@ -1,53 +1,110 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { BiMenu } from "react-icons/bi"; // from react-icons
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import SearchFilter from "./SearchFilter";
 
-
 const Header = () => {
-    const navigate = useNavigate();
-    const auth = getAuth();
+  const navigate = useNavigate();
+  const auth = getAuth();
 
-    const [user, setUser] = useState(null);
-    const [pageState, setPageState] = useState("Sign in");
+  const [user, setUser] = useState(null);
+  const [pageState, setPageState] = useState("Sign in");
+  const [showMenu, setShowMenu] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-    console.log(user)
-    
-    useEffect(()=>{
-        onAuthStateChanged(auth, user => {
-            if(user){
-                setPageState("Profile");
-                setUser(user);
-            } else {
-                setPageState("Sign in"); 
+  console.log(user)
+  
+  useEffect(()=>{
+    onAuthStateChanged(auth, user => {
+        if(user){
+            setPageState("Profile");
+            setUser(user);
+        } else {
+            setPageState("Sign in"); 
+        }
+    })
+}, [auth])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768); // adjust screen size as needed
+
+    };
+
+    handleResize(); // set initial value
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  return (
+    <header className="w-full shadow-md py-4">
+      <nav className="max-w-6xl w-full mx-auto flex flex-row justify-between items-center px-4">
+      <div className="flex flex-row items-center justify-start relative">
+        {isSmallScreen ? (
+            <button onClick={toggleMenu}>
+            <BiMenu className="h-6 w-6 text-gray-300" />
+            </button>
+        ) : (
+            <div className="flex flex-row items-center justify-start">
+            <Link to="/" className="mx-3">
+                Home
+            </Link>
+            <Link to="/tv-shows" className="mx-3">
+                TV Shows
+            </Link>
+            <Link to="/movies" className="mx-3">
+                Movies
+            </Link>
+            </div>
+        )}
+        {showMenu && isSmallScreen && (
+            <div className="flex flex-col top-11 absolute left-[-16px]  z-50">
+            <Link
+                to="/"
+                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                onClick={toggleMenu}
+            >
+                <p className="text-center">Home</p>
+            </Link>
+            <Link
+                to="/tv-shows"
+                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                onClick={toggleMenu}
+            >
+                <p className="text-center">Shows</p>
+            </Link>
+            <Link
+                to="/movies"
+                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                onClick={toggleMenu}
+            >
+                Movies
+            </Link>
+            </div>
+        )}
+        </div>
+
+
+        <div className="flex flex-row items-center">
+          <SearchFilter />
+          <button
+            className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
+            onClick={() =>
+              navigate(pageState === "Sign in" ? "/signin" : "/profile")
             }
-        })
-    }, [auth])
+          >
+            {pageState}
+          </button>
+        </div>
+      </nav>
+    </header>
+  );
+};
 
-
-
-
-    return ( 
-        <header className="w-full shadow-md py-4">
-            <nav className="max-w-6xl w-full mx-auto flex flex-row justify-between items-center">
-                <div className="flex flex-row items-center justify-start">
-                    <Link to="/" className="mr-10"><img src={`/assets/CINETRAIL.png`} alt="CINETRAIL" className="max-h-12"/></Link> 
-                    <Link to="/" className="mx-3">Home</Link>
-                    <Link to="/tv-shows" className="mx-3">TV Shows</Link>
-                    <Link to="/movies" className="mx-3">Movies</Link>
-
-                </div>
-                <div className="flex flex-row items-center">
-                    <SearchFilter />
-                    <button 
-                        className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
-                        onClick={()=>navigate(pageState === "Sign in"? "/signin" : "/profile")}
-                    >{pageState}</button>
-                </div> 
-            </nav>    
-        </header>
-        
-     );
-}
- 
 export default Header;
