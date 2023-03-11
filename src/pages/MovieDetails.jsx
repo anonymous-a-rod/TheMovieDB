@@ -6,6 +6,8 @@ import axios from "axios";
 import Review from "../components/Review";
 import CastCrew from "../components/CastCrew";
 import Recommendations from "../components/Recommendations";
+import Production from "../components/Production";
+import DetailsTable from "../components/DetailsTable";
 
 const MovieDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -92,13 +94,13 @@ const MovieDetails = () => {
                 </div>
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="flex m-20">
+                    <div className="flex flex-col justify-center items-center m-10 md:flex-row mt-20">
                         <img
                             src={`https://image.tmdb.org/t/p/original${MovieDetails.poster_path}`}
                             alt={MovieDetails.title}
                             className="w-72 h-82 object-cover"
                         />
-                        <div className="flex flex-col justify-around m-10">
+                        <div className="md gap-y-10 flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{MovieDetails.title}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className="flex">
@@ -119,7 +121,7 @@ const MovieDetails = () => {
                     {ReviewDetails?.results.length > 0 &&
                     <div className="mx-auto max-w-6xl relative">
                         <h3 className={(ReviewDetails?.results.length > 0)?"text-center text-3xl":'hidden'}>Reviews</h3>
-                        <div className="mx-20 mt-10" >
+                        <div className="mx-10 mt-10" >
                             {ReviewDetails.results.map((item,index)=>{
                                 if(!showWhole && index > 1){
                                     return <></>
@@ -163,27 +165,18 @@ const MovieDetails = () => {
                        <Recommendations info={similar} title="More like this" /> 
                     }
 
-                    <div className="flex flex-col justify-center items-center text-2xl gap-5 mt-20">
-                        <h3 className={"text-center text-3xl"}>Details</h3>
-                        <p>Release date: {MovieDetails.release_date}</p>
-                        <p>Original language: {MovieDetails.original_language}</p>
-                        <p>Runtime: {MovieDetails.runtime}</p>
-                        <p>Status: {MovieDetails.status}</p>
-                        <p>Rating: {MovieDetails.vote_average}/10</p>
-                    </div>
-                    <div className="my-20">
-                        <h3 className="text-center text-3xl mb-5">Box office</h3>
-                        <div className="flex gap-10 justify-center text-2xl">
-                            <p>Budget: {MovieDetails.budget}</p>
-                            <p>Revenue: {MovieDetails.revenue}</p>
-                        </div>
-                    </div>
+                    {MovieDetails && 
+                        <DetailsTable item={MovieDetails} title='Details' />
+                    }
                     
-                    <div className="mt-20">
-                        <h3 className={"text-center text-3xl"}>Production</h3>
-                        <p>Production Companies: map all in moviedetails</p>
-                        <p>Proudction Companies: map all in moviedetails</p>
-                    </div>
+                    {MovieDetails &&
+                        <Production info={MovieDetails.production_companies} head='Production Companies'/>
+                    }
+
+                    {MovieDetails &&
+                        <Production info={MovieDetails.production_countries} head='Production Countries'/>
+                    }   
+
                 </div>
             </section>
             }
