@@ -1,22 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 
 const SelectionCard = ({selection}) => {
     const navigate = useNavigate();
 
     const rating = selection.vote_average / 2;
-    const filledStars = Math.round(rating);
+    const filledStars = Math.floor(rating);
+    const hasHalfStar = rating - filledStars >= 0.5;
     // Create an array of stars to display
     const stars = Array.from({ length: 5 }, (_, index) => {
         if (index < filledStars) {
-        // Display a filled star
-        return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            // Display a filled star
+            return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+        } else if (index === filledStars && hasHalfStar) {
+            // Display a half-filled star
+            return <FaStarHalfAlt key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
         } else {
-        // Display an unfilled star
-        return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            // Display an unfilled star
+            return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
         }
     });
-
     // console.log(selection)
     // console.log("selection")
 

@@ -52,6 +52,7 @@ const Header = () => {
             </button>
         ) : (
             <div className="flex flex-row items-center justify-start">
+            <Link to="/" ><img src={`/assets/CINETRAIL.png`} alt="cinetrail" className="h-11" /></Link> 
             <Link to="/" className="mx-3">
                 Home
             </Link>

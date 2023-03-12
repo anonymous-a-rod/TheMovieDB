@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-const CastCrew = ({info, title}) => {
+const CastCrew = ({info, title, showMoreInfo}) => {
     const [showMore, setShowMore] = useState(false); 
+
+    console.log(showMoreInfo)
 
     return ( 
         <div className={(info.length >= 0)?'relative mb-10 max-w-6xl mx-auto':'hidden'}>
@@ -15,7 +17,7 @@ const CastCrew = ({info, title}) => {
                     
                     return(
                         <>
-                        { item.profile_path &&
+                        { item.name &&
                             <div className={(item.profile_path !== null)?"flex flex-col justify-start items-center":'hidden'}> 
                                 <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
                                 className='w-60 h-70' />
@@ -27,9 +29,11 @@ const CastCrew = ({info, title}) => {
                 })
             }
             </div>
+            { showMoreInfo &&
             <div className="w-full text-right cursor-pointer">
                 <p className="text-end mr-10 cursor-pointer" onClick={()=>setShowMore(!showMore)}>{(showMore)?`Show less ${title.toLowerCase()}...`:`Show more ${title.toLowerCase()}...`}</p>
             </div>
+            }
         </div>
      );
 }

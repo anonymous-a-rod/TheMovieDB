@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from "../components/Spinner";
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs';
 
@@ -23,7 +23,7 @@ export default function Banner() {
             setData(getData.data);
             console.log(getData.data);
             setCurrMovie(getData.data.results[0]); 
-            setAverage(Math.round(getData.data.results[0].vote_average / 2)); 
+            setAverage((getData.data.results[0].vote_average / 2)); 
             setDisplayWhole(true);
         };
         getPopular().catch(err=>console.log(err));
@@ -44,15 +44,18 @@ export default function Banner() {
       useEffect(()=>{
         // Create an array of stars to display
         setStars(Array.from({ length: 5 }, (_, index) => {
-            if (index < average) {
-            // Display a filled star
-            return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            if (index < Math.floor(average)) {
+                // Display a filled star
+                return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            } else if (index === Math.floor(average) && average - Math.floor(average) >= 0.5) {
+                // Display a half-filled star
+                return <FaStarHalfAlt key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
             } else {
-            // Display an unfilled star
-            return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+                // Display an unfilled star
+                return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
             }
         }));
-    },[average, counter]); 
+    },[average, counter]);
 
     //import { useSpring, animated as s} from 'react-spring';
     // const springLeft = useSpring({
