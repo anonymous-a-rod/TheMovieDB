@@ -6,6 +6,8 @@ import axios from "axios";
 import Review from "../components/Review";
 import CastCrew from "../components/CastCrew";
 import Recommendations from "../components/Recommendations";
+import Production from "../components/Production";
+import DetailsTable from "../components/DetailsTable";
 
 const TvShowDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -160,27 +162,17 @@ const TvShowDetails = () => {
                        <Recommendations info={similar} title="More like this" /> 
                     }
 
-                    <div className="flex flex-col justify-center items-center text-2xl gap-5 mt-20">
-                        <h3 className={"text-center text-3xl"}>Details</h3>
-                        <p>Release date: {showDetails.first_air_date}</p>
-                        <p>Original language: {showDetails.original_language}</p>
-                        <p>Runtime: {showDetails.episode_run_time}</p>
-                        <p>Status: {showDetails.status}</p>
-                        <p>Rating: {showDetails.vote_average}/10</p>
-                    </div>
-                    <div className="my-20">
-                        <h3 className="text-center text-3xl mb-5">Box office</h3>
-                        <div className="flex gap-10 justify-center text-2xl">
-                            <p>Budget: {showDetails.budget}</p>
-                            <p>Revenue: {showDetails.revenue}</p>
-                        </div>
-                    </div>
+                    {showDetails && 
+                        <DetailsTable item={showDetails} title='Details' />
+                    }
                     
-                    <div className="mt-20">
-                        <h3 className={"text-center text-3xl"}>Production</h3>
-                        <p>Production Companies: map all in showDetails</p>
-                        <p>Proudction Companies: map all in showDetails</p>
-                    </div>
+                    {showDetails &&
+                        <Production info={showDetails.production_companies} head='Production Companies'/>
+                    }
+
+                    {showDetails &&
+                        <Production info={showDetails.production_countries} head='Production Countries'/>
+                    } 
             </section>
             }
         </>

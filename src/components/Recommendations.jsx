@@ -42,8 +42,8 @@ const Recommendations = ({info, title}) => {
 
       console.log(info)
     return ( 
-        <div className="my-6">
-            <h3 className={"text-center text-3xl mb-4"}>{title}</h3>
+        <div className="my-6 max-w-6xl mx-auto">
+            <h3 className={"text-3xl my-4"}>{title}</h3>
             <div className="relative">
             <div className="flex overflow-hidden gap-2" id={type === "recommendations"? 'recommendations' : "similar"} onScroll={()=>handleScroll()}>
                 {

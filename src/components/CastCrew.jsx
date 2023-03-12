@@ -4,9 +4,9 @@ const CastCrew = ({info, title}) => {
     const [showMore, setShowMore] = useState(false); 
 
     return ( 
-        <div className='relative mb-10 max-w-6xl mx-auto'>
-            <h3 className={"text-center text-3xl mb-10 w-full capitalize"}>{title}</h3>
-            <div className={`mx-auto  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 overflow-hidden mb-2`}>
+        <div className={(info.length >= 0)?'relative mb-10 max-w-6xl mx-auto':'hidden'}>
+            <h3 className={"text-3xl mb-10 w-full capitalize"}>{title}</h3>
+            <div className={`mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 overflow-hidden mb-2`}>
             {
                 info.map((item,index)=>{
                     if(!showMore && index > 3){
