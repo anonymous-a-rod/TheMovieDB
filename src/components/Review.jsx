@@ -23,8 +23,7 @@ export default function Review({item}) {
       console.log(isShortReview)
 
   return (
-    <div>
-        <div className='flex flex-col items-center mb-4 p-4 bg-gray-800 rounded-lg border-2 border-slate-600 md:flex-row'>
+        <div className='flex flex-col items-center my-auto mb-4 p-4 bg-gray-800 rounded-lg border-2 border-slate-600 md:flex-row'>
             <div className="flex items-center flex-col mx-10 w-20">
                 {(item.author_details.avatar_path !== null)
                     ?<img src={(item.author_details.avatar_path.includes('/https:'))?`${item.author_details.avatar_path.substring(1)}`:`https://image.tmdb.org/t/p/w500${item.author_details.avatar_path}`} 
@@ -61,6 +60,5 @@ export default function Review({item}) {
                 <p className='mt-2'>{(item.author_details.rating !== '')?item.author_details.rating:'0'}/10</p>
             </div>
         </div>
-    </div>
   )
 }

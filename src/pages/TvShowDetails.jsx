@@ -96,13 +96,13 @@ const TvShowDetails = () => {
 
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="flex m-20">
+                    <div className="flex flex-col justify-start items-start m-10 md:flex-row mt-20">
                         <img
                             src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
                             alt={showDetails.name}
                             className="w-72 h-82 object-cover"
                         />
-                        <div className="flex flex-col justify-around m-10">
+                        <div className="flex flex-col justify-around m-10 gap-y-10">
                             <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className='flex'>
@@ -125,7 +125,7 @@ const TvShowDetails = () => {
                     {ReviewDetails?.results.length > 0 &&
                     <div className="mx-auto max-w-6xl relative">
                         <h3 className={(ReviewDetails?.results.length > 0)?"text-center text-3xl":'hidden'}>Reviews</h3>
-                        <div className="mx-20 mt-10" >
+                        <div className="mx-10 mt-10" >
                             {ReviewDetails.results.map((item,index)=>{
                                 if(!showWhole && index > 1){
                                     return <></>

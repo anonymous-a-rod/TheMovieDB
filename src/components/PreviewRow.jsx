@@ -48,11 +48,11 @@ const PreviewRow = ({category, searchQuery, additionalQuery}) => {
     <>
       { loading && <Spinner /> }
       { !loading && 
-        <div className="w-screen flex flex-col items-center relative">
+        <div className="w-screen flex flex-col items-center">
           <h2 className="text-4xl font-bold capitalize mb-4 w-full text-left ml-20">{category}</h2>
-          <div className='w-full flex overflow-auto scrollbar-hide overflow-y-hidden my-5 z-10 p-2' id={category} onScroll={handleScroll} >
-            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90" : "hidden"} onClick={handleScrollRight} />
-            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-20 w-20 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90" : "hidden"} onClick={handleScrollLeft} />
+          <div className='w-full flex overflow-auto overflow-y-hidden my-5 z-10 p-2 relative' id={category} onScroll={handleScroll} >
+            <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 h-0 w-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} onClick={handleScrollRight} />
+            <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 h-0 w-0 w text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} onClick={handleScrollLeft} />
             { selections?.length > 0 && selections.map((selection) =>
                 (
                   <div key={selection.id} style={{ scrollSnapAlign: 'start' }}>

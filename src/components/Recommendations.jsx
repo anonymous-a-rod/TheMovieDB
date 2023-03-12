@@ -55,7 +55,7 @@ const Recommendations = ({info, title, videoType="movie"}) => {
                                     src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                                     alt={item.title}
                                     className="w-50 h-60 cursor-pointer"
-                                    key={item.title}
+                                    key={item.id}
                                     onClick={()=>navigate(`/movie-details/${item.id}`)}
                                     
                                 />
@@ -67,7 +67,7 @@ const Recommendations = ({info, title, videoType="movie"}) => {
                                 src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                                 alt={item.title}
                                 className="w-50 h-60 cursor-pointer"
-                                key={item.title}
+                                key={item.id}
                                 onClick={()=>navigate(`/tv-show-details/${item.id}`)}     
                             />
                         )

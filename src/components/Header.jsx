@@ -11,6 +11,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [pageState, setPageState] = useState("Sign in");
   const [showMenu, setShowMenu] = useState(false);
+  const [animate, setAnimate] = useState(false); 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   console.log(user)
@@ -40,6 +41,7 @@ const Header = () => {
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
+    setAnimate(!animate); 
   };
 
   return (
@@ -53,9 +55,6 @@ const Header = () => {
         ) : (
             <div className="flex flex-row items-center justify-start">
             <Link to="/" ><img src={`/assets/CINETRAIL.png`} alt="cinetrail" className="h-11" /></Link> 
-            <Link to="/" className="mx-3">
-                Home
-            </Link>
             <Link to="/tv-shows" className="mx-3">
                 TV Shows
             </Link>
@@ -64,44 +63,53 @@ const Header = () => {
             </Link>
             </div>
         )}
-        {showMenu && isSmallScreen && (
-            <div className="flex flex-col top-11 absolute left-[-16px]  z-50">
-            <Link
-                to="/"
-                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
-                onClick={toggleMenu}
-            >
-                <p className="text-center">Home</p>
-            </Link>
-            <Link
-                to="/tv-shows"
-                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
-                onClick={toggleMenu}
-            >
-                <p className="text-center">Shows</p>
-            </Link>
-            <Link
-                to="/movies"
-                className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
-                onClick={toggleMenu}
-            >
-                Movies
-            </Link>
-            </div>
+        {isSmallScreen && (
+            <div className={(animate)?"flex flex-col top-11 absolute left-[-16px] z-50 w-screen transition-all duration-500":'flex flex-col top-11 absolute left-[-16px] z-50 w-0 overflow-hidden transition-all duration-500'}>
+              <Link
+                  to="/"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  onClick={toggleMenu}
+              >
+                  <p className="text-center">Home</p>
+              </Link>
+              <Link
+                  to="/tv-shows"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  onClick={toggleMenu}
+              >
+                  <p className="text-center">Shows</p>
+              </Link>
+              <Link
+                  to="/movies"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  onClick={toggleMenu}
+              >
+                  Movies
+              </Link>
+            <button
+              className="px-4 py-1 text-white font-semibold rounded-b-sm bg-red-700 h-[30px]"
+              onClick={() =>
+                navigate(pageState === "Sign in" ? "/signin" : "/profile")
+              }>
+              {pageState}
+            </button>
+          </div>
         )}
         </div>
 
 
         <div className="flex flex-row items-center">
           <SearchFilter />
-          <button
-            className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
-            onClick={() =>
-              navigate(pageState === "Sign in" ? "/signin" : "/profile")
-            }
-          >
-            {pageState}
-          </button>
+          {!isSmallScreen &&
+            <button
+              className='px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700'
+              onClick={() =>
+                navigate(pageState === "Sign in" ? "/signin" : "/profile")
+              }
+            >
+              {pageState}
+            </button>
+          }
         </div>
       </nav>
     </header>
