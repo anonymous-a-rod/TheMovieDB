@@ -96,7 +96,7 @@ const TvShowDetails = () => {
 
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="flex flex-col justify-center items-center m-10 md:flex-row mt-20">
+                    <div className="flex flex-col justify-start items-start m-10 md:flex-row mt-20">
                         <img
                             src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
                             alt={showDetails.name}

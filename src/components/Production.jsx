@@ -14,7 +14,8 @@ export default function Production({info, head}) {
                         alt={item.name} />
                     }
                     {(item.name) && !(item.iso_3166_1) && (item.logo_path !== null) &&
-                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.logo_path}`} />
+                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.logo_path}`} 
+                        className='drop-shadow-[0_2px_2px_gray]'/>
                     }                    
                 </div>
             })

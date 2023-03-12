@@ -20,7 +20,7 @@ const CastCrew = ({info, title, showMoreInfo}) => {
                         { item.name &&
                             <div className={(item.profile_path !== null)?"flex flex-col justify-start items-center":'hidden'}> 
                                 <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.profile_path}`} 
-                                className='w-60 h-70' />
+                                className='w-52 h-72' />
                                 <p className="text-xl mb-5 w-full text-center">{item.character? `${item.character}: ` : item.department? `${item.department}: ` : "" }{item.name}</p>
                             </div>
                         }
