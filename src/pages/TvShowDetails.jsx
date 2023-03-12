@@ -25,16 +25,16 @@ const TvShowDetails = () => {
 
     const param = useParams().id;
 
-    console.log("movie details")
-    console.log(showDetails)
-    console.log("credits")
-    console.log(credits)
-    console.log("recommendations")
-    console.log(recommendations)
-    console.log("similar")
-    console.log(similar)
+    // console.log("movie details")
+    // console.log(showDetails)
+    // console.log("credits")
+    // console.log(credits)
+    // console.log("recommendations")
+    // console.log(recommendations)
+    // console.log("similar")
+    // console.log(similar)
 
-    console.log(param)
+    // console.log(param)
 
     useEffect(()=>{
         const getData = async ()=>{
@@ -43,6 +43,7 @@ const TvShowDetails = () => {
             setShowDetails(getMovie.data);
             const getReview = await axios.get(`https://api.themoviedb.org/3/tv/${param}/reviews?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US&page=1`);
             setReviewDetails(getReview.data);
+            console.log(getReview.data); 
             const getShow = await axios.get(`https://api.themoviedb.org/3/tv/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
             setVideoDetails(getShow.data);
             const getCredits = await axios.get(`https://api.themoviedb.org/3/tv/${param}/credits?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
@@ -59,7 +60,7 @@ const TvShowDetails = () => {
         getData().catch(err=>console.log(err));  
     },[param])
 
-    console.log(average)
+    // console.log(average)
 
     useEffect(()=>{
         // Create an array of stars to display
@@ -100,9 +101,9 @@ const TvShowDetails = () => {
                         <img
                             src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
                             alt={showDetails.name}
-                            className="w-72 h-82 object-cover"
+                            className="w-52 h-62 object-cover sm:w-72 sm:h-82 m-auto"
                         />
-                        <div className="flex flex-col justify-around m-10 gap-y-10">
+                        <div className="gap-y-10 flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className='flex'>
@@ -175,11 +176,11 @@ const TvShowDetails = () => {
                         <DetailsTable item={showDetails} title='Details' />
                     }
                     
-                    {showDetails?.production_companies &&
+                    {showDetails.production_companies.length > 0 &&
                         <Production info={showDetails.production_companies} head='Production Companies'/>
                     }
 
-                    {showDetails?.production_countries &&
+                    {showDetails.production_countries.length > 0 &&
                         <Production info={showDetails.production_countries} head='Production Countries'/>
                     } 
             </section>

@@ -5,7 +5,8 @@ export default function Review({item}) {
     const [text, setText] = useState('');
     const textRef = useRef(null);
     const [showMore, setShowMore] = useState(false);
-    const [isShortReview, setIsShortReview] = useState(false)
+    const [isShortReview, setIsShortReview] = useState(false);
+    console.log(item)
 
     useEffect(() => {
         if (item.content) {
@@ -19,8 +20,8 @@ export default function Review({item}) {
         setIsShortReview(text.length < 100);
       }, [text]);
     
-      console.log("isShortReview")
-      console.log(isShortReview)
+    //   console.log("isShortReview")
+    //   console.log(isShortReview)
 
   return (
         <div className='flex flex-col items-center my-auto mb-4 p-4 bg-gray-800 rounded-lg border-2 border-slate-600 md:flex-row'>
@@ -57,7 +58,7 @@ export default function Review({item}) {
                 >
                     {item.content}
                 </div>
-                <p className='mt-2'>{(item.author_details.rating !== '')?item.author_details.rating:'0'}/10</p>
+                <p className='mt-2'>{(item.author_details.rating === '' || item.author_details.rating === null)?'':item.author_details.rating + '/10'}</p>
             </div>
         </div>
   )

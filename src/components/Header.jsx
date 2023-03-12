@@ -67,21 +67,21 @@ const Header = () => {
             <div className={(animate)?"flex flex-col top-11 absolute left-[-16px] z-50 w-screen transition-all duration-500":'flex flex-col top-11 absolute left-[-16px] z-50 w-0 overflow-hidden transition-all duration-500'}>
               <Link
                   to="/"
-                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-95 text-gray-300 font-semibold border border-gray-700"
                   onClick={toggleMenu}
               >
                   <p className="text-center">Home</p>
               </Link>
               <Link
                   to="/tv-shows"
-                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-95 text-gray-300 font-semibold border border-gray-700"
                   onClick={toggleMenu}
               >
                   <p className="text-center">Shows</p>
               </Link>
               <Link
                   to="/movies"
-                  className="block px-6 py-1 text-center bg-black bg-opacity-80 text-gray-300 font-semibold border border-gray-700"
+                  className="block px-6 py-1 text-center bg-black bg-opacity-95 text-gray-300 font-semibold border border-gray-700"
                   onClick={toggleMenu}
               >
                   Movies
