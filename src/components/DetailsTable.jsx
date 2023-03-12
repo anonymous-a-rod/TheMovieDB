@@ -10,13 +10,13 @@ export default function DetailsTable({item, title}) {
               <tbody className="divide-y divide-gray-600">
                 <tr>
                   <td className="w-1/2 py-2">Release date:</td>
-                  <td className="w-1/2 py-2 text-right">{item.release_date}</td>
+                  <td className="w-1/2 py-2 text-right">{item.release_date || item.first_air_date}</td>
                 </tr>
                 <tr>
                   <td className="w-1/2 py-2">Original language:</td>
                   <td className="w-1/2 py-2 text-right">{item.original_language}</td>
                 </tr>
-                <tr>
+                <tr className={item.runtime?'':'hidden'}>
                   <td className="w-1/2 py-2">Runtime:</td>
                   <td className="w-1/2 py-2 text-right">{item.runtime} minutes</td>
                 </tr>

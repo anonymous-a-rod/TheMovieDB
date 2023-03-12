@@ -87,14 +87,7 @@ const Header = () => {
             >
                 Movies
             </Link>
-            </div>
-        )}
-        </div>
-
-
-        <div className="flex flex-row items-center">
-          <SearchFilter />
-          <button
+            <button
             className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
             onClick={() =>
               navigate(pageState === "Sign in" ? "/signin" : "/profile")
@@ -102,6 +95,23 @@ const Header = () => {
           >
             {pageState}
           </button>
+            </div>
+        )}
+        </div>
+
+
+        <div className="flex flex-row items-center">
+          <SearchFilter />
+          {!isSmallScreen &&
+            <button
+              className="px-4 py-1 bg-black text-white rounded-lg font-semibold bg-red-700"
+              onClick={() =>
+                navigate(pageState === "Sign in" ? "/signin" : "/profile")
+              }
+            >
+              {pageState}
+            </button>
+          }
         </div>
       </nav>
     </header>

@@ -4,18 +4,17 @@ export default function Production({info, head}) {
     console.log(info); 
   return (
     <div className='my-10 max-w-6xl mx-auto'>
-        <h3 className='text-3xl mb-10 w-full capitalize'>{head}</h3>
-        <div className='mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 overflow-hidden mb-2 justify-center items-center'>
+        <h3 className='text-3xl mb-10 w-full capitalize ml-10'>{head}</h3>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-2 items-center'>
         {info.length > 0 &&
             info.map((item)=>{
                 return <div className='mx-10' key={item.id}>
                     {(item.iso_3166_1) && 
                         <img src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${item.iso_3166_1}.svg`} 
-                        alt={item.name}/>
+                        alt={item.name} />
                     }
-                    {(item.name) && !(item.iso_3166_1) && 
-                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.logo_path}`} 
-                        className='w-60 h-70 ' />
+                    {(item.name) && !(item.iso_3166_1) && (item.logo_path !== null) &&
+                        <img alt={item.name} src={`https://image.tmdb.org/t/p/original${item.logo_path}`} />
                     }                    
                 </div>
             })
