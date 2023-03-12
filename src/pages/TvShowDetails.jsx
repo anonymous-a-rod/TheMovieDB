@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import axios from "axios";
 import Review from "../components/Review";
 import CastCrew from "../components/CastCrew";
@@ -51,7 +51,7 @@ const TvShowDetails = () => {
             setRecommendations(getRecommendations.data.results);
             const getSimilar = await axios.get(`https://api.themoviedb.org/3/tv/${param}/similar?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
             setSimilar(getSimilar.data.results);
-            setAverage(Math.round(getMovie.data.vote_average / 2));
+            setAverage((getMovie.data.vote_average / 2));
             setTrailerSecondary((getShow.data.results.length >= 1)?getShow.data.results.filter((item, index)=>index === 0):null);
             setTrailer(getShow.data.results.filter(item=>item.name === 'Official Trailer'));
             setLoading(false);
@@ -59,19 +59,23 @@ const TvShowDetails = () => {
         getData().catch(err=>console.log(err));  
     },[param])
 
+    console.log(average)
+
     useEffect(()=>{
-        const filledStars = Math.round(average);
         // Create an array of stars to display
         setStars(Array.from({ length: 5 }, (_, index) => {
-            if (index < filledStars) {
-            // Display a filled star
-            return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            if (index < Math.floor(average)) {
+                // Display a filled star
+                return <FaStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+            } else if (index === Math.floor(average) && average - Math.floor(average) >= 0.5) {
+                // Display a half-filled star
+                return <FaStarHalfAlt key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
             } else {
-            // Display an unfilled star
-            return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
+                // Display an unfilled star
+                return <FaRegStar key={index} className="text-yellow-500 text-xl m-[0.5px]" />;
             }
         }));
-    },[average]);    
+    },[average]);  
 
     return ( 
         <>
@@ -101,14 +105,17 @@ const TvShowDetails = () => {
                         <div className="flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
-                            <div className="flex">
-                                {
-                                    showDetails.genres.map((item)=>{
-                                        return <p key={item.name} className='flex mr-2'>
-                                                    {item.name}
-                                                </p>
-                                    })
-                                }
+                            <div className='flex'>
+                            {showDetails.genres.map((item, index) => {
+                                return (
+                                <p 
+                                    className="mr-2"
+                                    key={item.name}>
+                                    {item.name}
+                                    {index !== showDetails.genres.length - 1 ? ', ' : ''}
+                                </p>
+                                );
+                            })}
                             </div>
                             <p>{showDetails.seasons.length} Seasons</p>
                             <p>{showDetails.overview}</p>
@@ -129,7 +136,7 @@ const TvShowDetails = () => {
                             }
                         </div>
                         <div>
-                            <p className={(ReviewDetails?.results.length > 0)?"text-end mr-10 cursor-pointer":'hidden'} onClick={()=>setShowWhole(!showWhole)}>
+                            <p className={(ReviewDetails?.results.length > 2)?"text-end mr-10 cursor-pointer":'hidden'} onClick={()=>setShowWhole(!showWhole)}>
                                 {(showWhole)?'Show Less...':'Show More Reviews...'}
                             </p>
                         </div>
@@ -140,37 +147,39 @@ const TvShowDetails = () => {
                     }
                 </div>
 
-                { credits.cast &&
+                    { credits.cast?.filter(member => member.profile_path !== null).length > 0 &&
                         <CastCrew 
-                            info={credits.cast} 
+                            info={credits.cast.filter(member => member.profile_path !== null)} 
                             title="Cast" 
+                            showMoreInfo={(credits.cast.filter(member => member.profile_path !== null).length > 4)}
                         />
                     }
 
-                    { credits.crew &&
+                    { credits.crew?.filter(member => member.profile_path !== null).length > 0 &&
                         <CastCrew 
-                            info={credits.crew} 
+                            info={credits.crew.filter(member => member.profile_path !== null)} 
                             title="Crew" 
+                            showMoreInfo={(credits.crew.filter(member => member.profile_path !== null).length > 4)}
                         />
                     }
 
-                    { recommendations &&
-                       <Recommendations info={recommendations} title="Recommendations" /> 
+                    { recommendations?.length &&
+                       <Recommendations info={recommendations} title="Recommendations" videoType="tv-shows" /> 
                     }
 
                     { similar?.length > 0 &&
-                       <Recommendations info={similar} title="More like this" /> 
+                       <Recommendations info={similar} title="More like this" videoType="tv-shows"/> 
                     }
 
                     {showDetails && 
                         <DetailsTable item={showDetails} title='Details' />
                     }
                     
-                    {showDetails &&
+                    {showDetails?.production_companies &&
                         <Production info={showDetails.production_companies} head='Production Companies'/>
                     }
 
-                    {showDetails &&
+                    {showDetails?.production_countries &&
                         <Production info={showDetails.production_countries} head='Production Countries'/>
                     } 
             </section>

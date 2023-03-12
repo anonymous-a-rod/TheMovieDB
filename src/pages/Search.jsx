@@ -33,7 +33,7 @@ const Search = () => {
     return ( 
         <>
             <section className="max-w-6xl mx-auto">
-                <h1 className="w-full text-center text-5xl font-semibold capitalize">{param && param.replaceAll("+", " ")}</h1>
+                <h1 className="text-6xl w-full text-center my-10 capitalize">{param && param.replaceAll("+", " ")}</h1>
                 { loading && <Spinner /> }
                 { !loading && selections && 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center items-center mb-10">

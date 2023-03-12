@@ -23,7 +23,7 @@ const SearchFilter = () => {
             <input
                 className="w-64 h-8 rounded-md indent-2 pl-1 mr-3 focus:outline-none border text-gray-800 bg-gray-100"
                 type="text"
-                placeholder="Search a Movie" 
+                placeholder="Search..." 
                 value={searchInput}
                 onChange={(e)=>setSearchInput(e.target.value)}
                 onKeyDown={handleInputKeyDown}

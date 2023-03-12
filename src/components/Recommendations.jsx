@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BsFillArrowRightSquareFill, BsFillArrowLeftSquareFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 
-const Recommendations = ({info, title}) => {
+const Recommendations = ({info, title, videoType="movie"}) => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const [showLeft, setShowLeft] = useState(false);
     const [showRight, setShowRight] = useState(true);
@@ -48,15 +48,27 @@ const Recommendations = ({info, title}) => {
             <div className="flex overflow-hidden gap-2" id={type === "recommendations"? 'recommendations' : "similar"} onScroll={()=>handleScroll()}>
                 {
                     info && info.map((item)=>{
-                        return(
+                        if(videoType === "movie"){
+                            return(
 
+                                <img
+                                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                                    alt={item.title}
+                                    className="w-50 h-60 cursor-pointer"
+                                    key={item.title}
+                                    onClick={()=>navigate(`/movie-details/${item.id}`)}
+                                    
+                                />
+                            )
+                        }
+
+                        return(
                             <img
                                 src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                                 alt={item.title}
                                 className="w-50 h-60 cursor-pointer"
                                 key={item.title}
-                                onClick={()=>navigate(`/movie-details/${item.id}`)}
-                                
+                                onClick={()=>navigate(`/tv-show-details/${item.id}`)}     
                             />
                         )
                     })
