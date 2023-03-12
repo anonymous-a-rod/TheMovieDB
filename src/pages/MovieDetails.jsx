@@ -25,18 +25,6 @@ const MovieDetails = () => {
 
     const param = useParams().id;
 
-    console.log("movie details")
-    console.log(MovieDetails)
-    console.log("credits")
-    console.log(credits)
-    console.log("recommendations")
-    console.log(recommendations)
-    console.log("similar")
-    console.log(similar)
-
-    console.log("reviewDetails")
-    console.log(ReviewDetails)
-
 
     useEffect(()=>{
         const getData = async ()=>{
@@ -45,6 +33,7 @@ const MovieDetails = () => {
             setMovieDetails(getMovie.data);
             const getReview = await axios.get(`https://api.themoviedb.org/3/movie/${param}/reviews?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US&page=1`);
             setReviewDetails(getReview.data);
+            console.log(getReview.data);
             const getVideo = await axios.get(`https://api.themoviedb.org/3/movie/${param}/videos?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
             setVideoDetails(getVideo.data);
             const getCredits = await axios.get(`https://api.themoviedb.org/3/movie/${param}/credits?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
@@ -59,7 +48,19 @@ const MovieDetails = () => {
             setLoading(false);
         }
         getData().catch(err=>console.log(err));  
-    },[param])
+    },[param]);
+
+    // console.log("movie details")
+    // console.log(MovieDetails)
+    // console.log("credits")
+    // console.log(credits)
+    // console.log("recommendations")
+    // console.log(recommendations)
+    // console.log("similar")
+    // console.log(similar)
+
+    // console.log("reviewDetails")
+    // console.log(ReviewDetails)
 
     useEffect(()=>{
         // Create an array of stars to display
@@ -100,9 +101,9 @@ const MovieDetails = () => {
                         <img
                             src={`https://image.tmdb.org/t/p/original${MovieDetails.poster_path}`}
                             alt={MovieDetails.title}
-                            className="w-72 h-82 object-cover"
+                            className="w-52 h-62 object-cover sm:w-72 sm:h-92 m-auto"
                         />
-                        <div className="md gap-y-10 flex flex-col justify-around m-10">
+                        <div className="gap-y-10 flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{MovieDetails.title}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className="flex">
@@ -178,11 +179,11 @@ const MovieDetails = () => {
                         <DetailsTable item={MovieDetails} title='Details' />
                     }
                     
-                    {MovieDetails &&
+                    {MovieDetails.production_companies?.length > 0 && 
                         <Production info={MovieDetails.production_companies} head='Production Companies'/>
                     }
 
-                    {MovieDetails &&
+                    {MovieDetails.production_countries?.length > 0  &&
                         <Production info={MovieDetails.production_countries} head='Production Countries'/>
                     }   
 

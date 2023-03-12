@@ -26,7 +26,7 @@ const SelectionCard = ({selection}) => {
     return ( 
         <article
             onClick={() => navigate(`../${selection.title ? "movie-details" : "tv-show-details"}/${selection.id}`)}
-            className="mx-4 w-[280px] h-[420px] relative bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group"
+            className="mx-4 relative w-[180px] h-[320px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group sm:w-[280px] sm:h-[500px]"
         >
             <div className="absolute pt-2 pl-2 hidden group-hover:flex ">
                 {stars}
