@@ -104,7 +104,7 @@ const TvShowDetails = () => {
                             alt={showDetails.name}
                             className="w-52 h-62 object-cover sm:w-72 sm:h-82 m-auto"
                         />
-                        <div className="gap-y-10 flex flex-col justify-around m-10">
+                        <div className="gap-y-3 flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className='flex'>
