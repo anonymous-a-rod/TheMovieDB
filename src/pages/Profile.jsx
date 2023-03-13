@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { updateDoc, doc, getDoc } from "firebase/firestore";
+import { updateDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -12,8 +12,6 @@ const Profile = () => {
     const auth = getAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-    const [movieWatchList, setMovieWatchList] = useState([]);
-    const [tvWatchList, setTvWatchList] = useState([]);
     const [changeDetail, setChangeDetail] = useState(false);
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
@@ -42,10 +40,6 @@ const Profile = () => {
         // eslint-disable-next-line
     }, [auth])
 
-    console.log(movieWatchList)
-    console.log(tvWatchList)
-
-
     // fetch watchlist and set states
     async function fetchWatchList() {
         setLoading(true);
@@ -55,43 +49,41 @@ const Profile = () => {
 
         if (docSnap.exists()) {
             const watchListData = docSnap.data();
-            if (watchListData.hasOwnProperty("movies")) {
-                setMovieWatchList(watchListData["movies"]);
-            } else {
-                setMovieWatchList([]);
-            }
-            if (watchListData.hasOwnProperty("tvshows")) {
-                setTvWatchList(watchListData["tvshows"]);
-            } else {
-                setTvWatchList([]);
-            }
+            const combinedWatchList = {
+                movies: watchListData.hasOwnProperty("movies") ? watchListData["movies"] : [],
+                tvshows: watchListData.hasOwnProperty("tvshows") ? watchListData["tvshows"] : [],
+            };
+            setWatchList(combinedWatchList);
         } else {
-            setMovieWatchList([]);
-            setTvWatchList([]);
+            setWatchList({
+                movies: [],
+                tvshows: [],
+            });
         }
-    };
+    }
+
+
 
     // filter out removed selection
     function handleChange(type, ID) {
-        // if (loggedIn) {
-        // setWatchList({
-        //     ...watchList,
-        //     [type]: watchList[type].filter(item => item !== ID)
-        // });
-        // } else {
-        //     toast.error("Sign in to add to watchlist");
-        // }
+        if (loggedIn) {
+        setWatchList({
+            ...watchList,
+            [type]: watchList[type].filter(item => item !== ID)
+        });
+        } else {
+            toast.error("Sign in to add to watchlist");
+        }
     }
 
-    // // update firebase after removing docs
-    // useEffect(() => {
-    //     if (loggedIn && watchList !== null) {
-    //         const watchListRef = doc(db, "watchlist", auth.currentUser.uid);
-    //         setDoc(watchListRef, watchList );
-    //     }
-    //     fetchWatchList()
-    //     // eslint-disable-next-line
-    // }, [watchList, loggedIn]);
+    // update firebase after removing docs
+    useEffect(() => {
+        if (loggedIn && watchList !== null) {
+            const watchListRef = doc(db, "watchlist", auth.currentUser.uid);
+            setDoc(watchListRef, watchList );
+        }
+    // eslint-disable-next-line
+    }, [watchList]);
     
     function onLogout(){
         auth.signOut();
@@ -176,13 +168,13 @@ const Profile = () => {
                         </div>
                     </form>
                 </div>
-                { !loading &&  (movieWatchList?.length > 0) &&
+                { !loading &&  watchList &&
                 <>                          
                     <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
                     Watchlist
                     </h2>
                     <div className="flex flex-wrap justify-center items-center  gap-6 mb-10">     
-                    { movieWatchList?.length > 0 && movieWatchList.map((MovieID)=>
+                    { watchList.movies?.length > 0 && watchList.movies.map((MovieID)=>
                         (
                             <div key={MovieID}>
 
@@ -196,7 +188,7 @@ const Profile = () => {
                             </div>     
                         )
                     )}
-                    { tvWatchList.map((showID)=>
+                    { watchList.tvshows?.length > 0 && watchList.tvshows.map((showID)=>
                         (
                             <div key={showID}>
 

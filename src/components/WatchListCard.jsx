@@ -5,7 +5,7 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { CgPlayListRemove } from "react-icons/cg"
 
 
-const WatchListCard = ({ID, type, handleChange}) => {
+const WatchListCard = ({ID, type, onRemove}) => {
     const [details,setDetails] = useState(null);
     const [stars, setStars] = useState(null);
     const navigate = useNavigate();
@@ -54,10 +54,12 @@ const WatchListCard = ({ID, type, handleChange}) => {
         className="relative w-[200px] h-[300px]  rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[280px] lg:h-[380px]"
         >
             <div 
-                onClick={()=>handleChange()}
+                onClick={()=>onRemove(type, ID)}
                 className="cursor-pointer hidden group-hover:flex text-red-500 absolute top-1 right-1"
             >
-                <CgPlayListRemove className="inline text-3xl" />
+                <CgPlayListRemove 
+                    className="inline text-3xl" 
+                />
             </div>
             <div
                 onClick={() => navigate(`/${details.title ? "movie-details" : "tv-show-details"}/${details.id}`)}
