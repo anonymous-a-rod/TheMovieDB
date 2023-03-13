@@ -110,9 +110,9 @@ const Profile = () => {
     return ( 
         <>
             <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
-                <h1 className="text-3xl text-center mt-6 font-bold">My Profile</h1>
+                <h1 className="text-3xl text-center mt-12 font-bold">My Profile</h1>
               
-                <div className="w-full md:w-[50%] mt-6 mb-12 px-3">
+                <div className="w-full md:w-[50%] mt-6 mb-6 px-3">
                     <form>
                         <div className="relative">
                         
@@ -148,7 +148,7 @@ const Profile = () => {
                 </div>
                 { !loading &&  (movieWatchList?.length > 0) &&
                 <>                          
-                    <h2 className="text-xl sm:text-3xl text-center font-semibold mb-6 mt-6">
+                    <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
                     Movie Watchlist
                     </h2>
                     <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     
@@ -167,7 +167,7 @@ const Profile = () => {
                 }
                 { !loading && (tvWatchList?.length > 0) && 
                 <>                          
-                    <h2 className="text-xl sm:text-3xl text-center font-semibold mb-6 mt-6">
+                    <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
                     TV Show Watchlist
                     </h2>
                     <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     

@@ -53,7 +53,7 @@ const WatchListCard = ({ID, type}) => {
         <article
         onClick={() => navigate(`/${details.title ? "movie-details" : "tv-show-details"}/${details.id}`)}
 
-            className="mx-4 relative w-[180px] h-[320px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group sm:w-[280px] sm:h-[500px]"
+        className="mx-4 relative w-[200px] h-[300px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[280px] lg:h-[380px]"
         >
             <div className="absolute pt-2 pl-2 hidden group-hover:flex ">
                 {stars}
@@ -73,3 +73,4 @@ const WatchListCard = ({ID, type}) => {
 }
  
 export default WatchListCard;
+
