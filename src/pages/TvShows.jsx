@@ -37,7 +37,7 @@ const TvShows = () => {
             { loading && <Spinner /> }
             <h1 className="text-6xl w-full text-center my-10">Popular TV Shows</h1>
             { !loading && selections && 
-            <div className="flex flex-col justify-center items-center sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-10">
+            <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">
             { selections?.length > 0 && selections.map((selection)=>
                 (
                     <div key={selection.id}>
