@@ -19,25 +19,34 @@ const Profile = () => {
         name: auth.currentUser.displayName,
         email: auth.currentUser.email
     })
-
-    console.log(movieWatchList)
-    console.log(tvWatchList)
-
+    const [watchList, setWatchList] = useState(null);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const {name, email} = formData;
+ 
+    console.log("watchlist")
+    console.log(watchList)
+    console.log(loggedIn)
+
 
     useEffect(()=>{
         onAuthStateChanged(auth, user => {
             if(user){
+                setLoggedIn(true);
                 fetchWatchList();
             } else {
-                setMovieWatchList([]);
+                setLoggedIn(false);
+                setWatchList(null);
             }
         })
         // eslint-disable-next-line
     }, [auth])
 
+    console.log(movieWatchList)
+    console.log(tvWatchList)
 
+
+    // fetch watchlist and set states
     async function fetchWatchList() {
         setLoading(true);
         const docRef = doc(db, "watchlist", auth.currentUser.uid);
@@ -61,8 +70,29 @@ const Profile = () => {
             setTvWatchList([]);
         }
     };
-    
 
+    // filter out removed selection
+    function handleChange(type, ID) {
+        // if (loggedIn) {
+        // setWatchList({
+        //     ...watchList,
+        //     [type]: watchList[type].filter(item => item !== ID)
+        // });
+        // } else {
+        //     toast.error("Sign in to add to watchlist");
+        // }
+    }
+
+    // // update firebase after removing docs
+    // useEffect(() => {
+    //     if (loggedIn && watchList !== null) {
+    //         const watchListRef = doc(db, "watchlist", auth.currentUser.uid);
+    //         setDoc(watchListRef, watchList );
+    //     }
+    //     fetchWatchList()
+    //     // eslint-disable-next-line
+    // }, [watchList, loggedIn]);
+    
     function onLogout(){
         auth.signOut();
         navigate('/');
@@ -125,7 +155,7 @@ const Profile = () => {
                                 }`}
                             
                                 disabled={!changeDetail}
-                                onChange={onChange}
+                                onChange={()=>onChange()}
                                 placeholder="Username"
                             />
                         </div>
@@ -149,34 +179,33 @@ const Profile = () => {
                 { !loading &&  (movieWatchList?.length > 0) &&
                 <>                          
                     <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
-                    Movie Watchlist
+                    Watchlist
                     </h2>
-                    <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     
+                    <div className="flex flex-wrap justify-center items-center  gap-6 mb-10">     
                     { movieWatchList?.length > 0 && movieWatchList.map((MovieID)=>
                         (
                             <div key={MovieID}>
 
                                 <div>
-                                    <WatchListCard ID={MovieID} type="movie" />
+                                    <WatchListCard 
+                                        ID={MovieID} 
+                                        type="movies"
+                                        onRemove={handleChange} 
+                                    />
                                 </div>
                             </div>     
                         )
                     )}
-                    </div>
-                </>
-                }
-                { !loading && (tvWatchList?.length > 0) && 
-                <>                          
-                    <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
-                    TV Show Watchlist
-                    </h2>
-                    <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     
                     { tvWatchList.map((showID)=>
                         (
                             <div key={showID}>
 
                                 <div>
-                                    <WatchListCard ID={showID} type="tvshow" />
+                                    <WatchListCard 
+                                        ID={showID} 
+                                        type="tvshows" 
+                                        onRemove={handleChange} 
+                                    />
                                 </div>
                             </div>     
                         )
@@ -184,6 +213,7 @@ const Profile = () => {
                     </div>
                 </>
                 }
+                
             </section>
         </>
      );

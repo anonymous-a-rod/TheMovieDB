@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
+import { CgPlayListRemove } from "react-icons/cg"
 
-const WatchListCard = ({ID, type}) => {
+
+const WatchListCard = ({ID, type, handleChange}) => {
     const [details,setDetails] = useState(null);
     const [stars, setStars] = useState(null);
     const navigate = useNavigate();
@@ -30,14 +32,12 @@ const WatchListCard = ({ID, type}) => {
         }
     },[details])
 
-
-
     useEffect(()=>{
         const getData = async ()=>{
-            if(type === "movie"){
+            if(type === "movies"){
                 const getMovie = await axios.get(`https://api.themoviedb.org/3/movie/${ID}?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
                 setDetails(getMovie.data);    
-            } else if(type === "tvshow"){
+            } else if(type === "tvshows"){
                 const getMovie = await axios.get(`https://api.themoviedb.org/3/tv/${ID}?api_key=09cbcde820a19e4959494fa25a97a645&language=en-US`);
                 setDetails(getMovie.data);    
             }
@@ -51,10 +51,17 @@ const WatchListCard = ({ID, type}) => {
         <>
         { details &&
         <article
-        onClick={() => navigate(`/${details.title ? "movie-details" : "tv-show-details"}/${details.id}`)}
-
-        className="mx-4 relative w-[200px] h-[300px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[280px] lg:h-[380px]"
+        className="relative w-[200px] h-[300px]  rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[280px] lg:h-[380px]"
         >
+            <div 
+                onClick={()=>handleChange()}
+                className="cursor-pointer hidden group-hover:flex text-red-500 absolute top-1 right-1"
+            >
+                <CgPlayListRemove className="inline text-3xl" />
+            </div>
+            <div
+                onClick={() => navigate(`/${details.title ? "movie-details" : "tv-show-details"}/${details.id}`)}
+            >
             <div className="absolute pt-2 pl-2 hidden group-hover:flex ">
                 {stars}
             </div>
@@ -65,6 +72,7 @@ const WatchListCard = ({ID, type}) => {
             />
             <div className="absolute bottom-0 z-10 bg-black w-full bg-opacity-0 transition-opacity duration-300 group-hover:bg-opacity-70">
                 <h4 className="p-2 py-4 font-semibold text-xl text-center text-white text-opacity-0 group-hover:text-opacity-100">{details.title ? details.title : details.name}</h4>
+            </div>
             </div>
         </article>
         }
