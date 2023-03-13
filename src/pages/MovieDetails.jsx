@@ -8,6 +8,7 @@ import CastCrew from "../components/CastCrew";
 import Recommendations from "../components/Recommendations";
 import Production from "../components/Production";
 import DetailsTable from "../components/DetailsTable";
+import WatchList from "../components/WatchList";
 
 const MovieDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -123,6 +124,7 @@ const MovieDetails = () => {
                             <div>
                                 <p>{MovieDetails.overview}</p>
                             </div>
+                            <WatchList param={param} type="movies"/>
                         </div>
                     </div>
 

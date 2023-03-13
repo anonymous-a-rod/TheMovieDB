@@ -8,6 +8,7 @@ import CastCrew from "../components/CastCrew";
 import Recommendations from "../components/Recommendations";
 import Production from "../components/Production";
 import DetailsTable from "../components/DetailsTable";
+import WatchList from "../components/WatchList";
 
 const TvShowDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -121,6 +122,7 @@ const TvShowDetails = () => {
                             <p>{showDetails.seasons.length} Seasons</p>
                             <p>{showDetails.overview}</p>
                             <p>{showDetails.type}</p>
+                            <WatchList param={param} type="tvshows" />
                         </div>
                     </div>
                     {ReviewDetails?.results.length > 0 &&

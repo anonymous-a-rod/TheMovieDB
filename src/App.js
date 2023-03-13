@@ -37,7 +37,6 @@ function App() {
             <Route path="/profile" element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
             </Route>
-            
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/movie-details/:id" element={<MovieDetails />} />
             <Route path="/tv-show-details/:id" element={<TvShowDetails />} />
@@ -47,17 +46,17 @@ function App() {
         <Footer />
       </Router>
       <ToastContainer
-                    position="bottom-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="dark"
-                />
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+      />
     </main>
   );
 }
