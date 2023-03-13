@@ -26,7 +26,6 @@ const MovieDetails = () => {
 
     const param = useParams().id;
 
-
     useEffect(()=>{
         const getData = async ()=>{
             setLoading(true);

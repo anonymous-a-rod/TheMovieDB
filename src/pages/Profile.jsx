@@ -1,8 +1,9 @@
-import { getAuth, updateProfile } from "firebase/auth";
-import { updateDoc, doc } from "firebase/firestore";
-import { useState } from "react";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { updateDoc, doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import WatchListCard from "../components/WatchListCard";
 import { db } from "../firebase";
 
 
@@ -10,13 +11,56 @@ import { db } from "../firebase";
 const Profile = () => {
     const auth = getAuth();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+    const [movieWatchList, setMovieWatchList] = useState([]);
+    const [tvWatchList, setTvWatchList] = useState([]);
     const [changeDetail, setChangeDetail] = useState(false);
     const [formData, setFormData] = useState({
         name: auth.currentUser.displayName,
         email: auth.currentUser.email
     })
 
+    console.log(movieWatchList)
+    console.log(tvWatchList)
+
+
     const {name, email} = formData;
+
+    useEffect(()=>{
+        onAuthStateChanged(auth, user => {
+            if(user){
+                fetchWatchList();
+            } else {
+                setMovieWatchList([]);
+            }
+        })
+        // eslint-disable-next-line
+    }, [auth])
+
+
+    async function fetchWatchList() {
+        setLoading(true);
+        const docRef = doc(db, "watchlist", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        setLoading(false);
+
+        if (docSnap.exists()) {
+            const watchListData = docSnap.data();
+            if (watchListData.hasOwnProperty("movies")) {
+                setMovieWatchList(watchListData["movies"]);
+            } else {
+                setMovieWatchList([]);
+            }
+            if (watchListData.hasOwnProperty("tvshows")) {
+                setTvWatchList(watchListData["tvshows"]);
+            } else {
+                setTvWatchList([]);
+            }
+        } else {
+            setMovieWatchList([]);
+            setTvWatchList([]);
+        }
+    };
     
 
     function onLogout(){
@@ -52,6 +96,10 @@ const Profile = () => {
         }
     }
 
+    
+
+
+
 
     const style = {
         email: `w-full mb-6 px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out`,
@@ -60,11 +108,11 @@ const Profile = () => {
     }
 
     return ( 
-        <div>
+        <>
             <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
                 <h1 className="text-3xl text-center mt-6 font-bold">My Profile</h1>
               
-                <div className="w-full md:w-[50%] mt-6 px-3">
+                <div className="w-full md:w-[50%] mt-6 mb-12 px-3">
                     <form>
                         <div className="relative">
                         
@@ -98,9 +146,46 @@ const Profile = () => {
                         </div>
                     </form>
                 </div>
-            </section>
+                { !loading &&  (movieWatchList?.length > 0) &&
+                <>                          
+                    <h2 className="text-xl sm:text-3xl text-center font-semibold mb-6 mt-6">
+                    Movie Watchlist
+                    </h2>
+                    <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     
+                    { movieWatchList?.length > 0 && movieWatchList.map((MovieID)=>
+                        (
+                            <div key={MovieID}>
 
-        </div>
+                                <div>
+                                    <WatchListCard ID={MovieID} type="movie" />
+                                </div>
+                            </div>     
+                        )
+                    )}
+                    </div>
+                </>
+                }
+                { !loading && (tvWatchList?.length > 0) && 
+                <>                          
+                    <h2 className="text-xl sm:text-3xl text-center font-semibold mb-6 mt-6">
+                    TV Show Watchlist
+                    </h2>
+                    <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">     
+                    { tvWatchList.map((showID)=>
+                        (
+                            <div key={showID}>
+
+                                <div>
+                                    <WatchListCard ID={showID} type="tvshow" />
+                                </div>
+                            </div>     
+                        )
+                    )}
+                    </div>
+                </>
+                }
+            </section>
+        </>
      );
 }
  
