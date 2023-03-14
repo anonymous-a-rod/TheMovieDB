@@ -45,7 +45,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full shadow-md py-4 sticky left-0 right-0 top-0 z-50 bg-black opacity-90">
+    <header className="w-full shadow-md py-4 sticky left-0 right-0 top-0 z-50 bg-black bg-opacity-95">
       <nav className="max-w-6xl w-full mx-auto flex flex-row justify-between items-center px-4">
       <div className="flex flex-row items-center justify-start relative">
         {isSmallScreen ? (

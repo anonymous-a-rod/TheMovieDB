@@ -35,9 +35,9 @@ const TvShows = () => {
         <>
         <section className="max-w-6xl mx-auto">
             { loading && <Spinner /> }
-            <h1 className="text-6xl w-full text-center my-10">Popular TV Shows</h1>
+            <h1 className="text-4xl lg:text-6xl w-full text-center my-10">Popular TV Shows</h1>
             { !loading && selections && 
-            <div className="grid grid-cols-1 gap-8 mb-2 items-center justify-items-center sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto grid grid-cols-1 gap-8 mb-2 items-center justify-items-center sm:max-w-[432px] sm:grid-cols-2 md:grid-cols-3 md:max-w-[664px] lg:max-w-[814px] xl:max-w-[1096px] xl:grid-cols-4">
             { selections?.length > 0 && selections.map((selection)=>
                 (
                     <div key={selection.id}>

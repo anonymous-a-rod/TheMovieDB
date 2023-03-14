@@ -7,7 +7,7 @@ const questions = [
     {
       id: 2,
       title: 'How do I search for movies on CineTrail?',
-      info: 'You can use the search bar at the top of the page to search for movies by title, actor, director, or keyword.',
+      info: 'You can use the search bar at the top of the page to search for movies by title.',
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ const questions = [
     {
       id: 6,
       title: 'Are there user ratings on CineTrail?',
-      info: 'Yes, you can see user ratings on each movie\'s page, and you can also rate movies yourself if you have an account.',
+      info: 'Yes, you can see user ratings on each movie and TV show\'s page.',
     },
     {
       id: 7,
@@ -37,7 +37,7 @@ const questions = [
     {
       id: 8,
       title: 'Is CineTrail free to use?',
-      info: 'Yes, CineTrail is completely free to use, although you do need to create an account to access some features like rating movies and creating a watchlist.',
+      info: 'Yes, CineTrail is completely free to use, although you do need to create an account to access some features like creating a watchlist.',
     },
   ];
   

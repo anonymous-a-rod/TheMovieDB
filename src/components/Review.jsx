@@ -37,20 +37,6 @@ export default function Review({item}) {
                 <h4 className="w-20 text-center mt-2">{item.author}</h4>
             </div>
             <div className="relative w-full text-lg overflow-hidden">
-                {!isShortReview && 
-                <>
-                    {(showMore)?
-                        <BsBoxArrowUp  
-                            onClick={()=>setShowMore(!showMore)} 
-                            className='w-5 h-5 absolute bottom-0 right-5 cursor-pointer' 
-                        />
-                    :
-                        <BsBoxArrowDown 
-                            onClick={()=>setShowMore(!showMore)} 
-                            className='w-5 h-5 absolute bottom-0 right-5 cursor-pointer'
-                        />
-                    }
-                </>}
                 <div    
                     className={`${(showMore)?'':'truncate '} mb-4`}
                     id={item.id}
@@ -58,7 +44,23 @@ export default function Review({item}) {
                 >
                     {item.content}
                 </div>
-                <p className='mt-2'>{(item.author_details.rating === '' || item.author_details.rating === null)?'':item.author_details.rating + '/10'}</p>
+                <div className='pt-2 relative w-full flex flex-row justify-between items-center'>
+                    <p >{(item.author_details.rating === '' || item.author_details.rating === null)?'':item.author_details.rating + '/10'}</p>
+                    {!isShortReview && 
+                    <>
+                        {(showMore)?
+                            <BsBoxArrowUp  
+                                onClick={()=>setShowMore(!showMore)} 
+                                className='w-5 h-5 mr-5 cursor-pointer' 
+                            />
+                        :
+                            <BsBoxArrowDown 
+                                onClick={()=>setShowMore(!showMore)} 
+                                className='w-5 h-5 mr-5  cursor-pointer'
+                            />
+                        }
+                    </>}
+                </div>
             </div>
         </div>
   )

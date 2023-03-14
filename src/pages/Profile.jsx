@@ -173,7 +173,7 @@ const Profile = () => {
                     <h2 className="text-3xl text-center font-semibold mb-6 mt-6">
                     Watchlist
                     </h2>
-                    <div className="flex flex-wrap justify-center items-center  gap-6 mb-10">     
+                    <div className="mx-auto grid grid-cols-1 gap-8 mb-2 items-center justify-items-center sm:max-w-[432px] sm:grid-cols-2 md:grid-cols-3 md:max-w-[664px] lg:max-w-[814px] xl:max-w-[1096px] xl:grid-cols-4">     
                     { watchList.movies?.length > 0 && watchList.movies.map((MovieID)=>
                         (
                             <div key={MovieID}>
@@ -202,7 +202,18 @@ const Profile = () => {
                             </div>     
                         )
                     )}
+                    
                     </div>
+                    { watchList.movies?.length < 1 && watchList.tvshows?.length < 1 && (
+                        <div className="flex flex-col items-center justify-center">
+                        <img
+                          src="./assets/popcorn.png"
+                          alt="popcorn"
+                          className="w-[400px] h-[400px] mb-4 mt-4"
+                        />
+                        <p className="text-gray-400 text-lg">No movies in your watchlist yet. Time to grab some popcorn and start browsing!</p>
+                      </div>
+                    )}
                 </>
                 }
                 

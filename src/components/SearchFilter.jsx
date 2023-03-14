@@ -21,7 +21,7 @@ const SearchFilter = () => {
     return ( 
         <div className="relative ">
             <input
-                className="w-64 h-8 rounded-md indent-2 pl-1 mr-0 focus:outline-none border text-gray-800 bg-gray-100 sm:mr-3"
+                className=" w-64 h-8 rounded-md indent-2 pl-1 mr-0 focus:outline-none border text-gray-800 bg-gray-100 sm:mr-3"
                 type="text"
                 placeholder="Search..." 
                 value={searchInput}

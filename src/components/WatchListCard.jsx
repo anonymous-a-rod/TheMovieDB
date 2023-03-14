@@ -51,7 +51,7 @@ const WatchListCard = ({ID, type, onRemove}) => {
         <>
         { details &&
         <article
-        className="relative w-[200px] h-[300px]  rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[280px] lg:h-[380px]"
+        className=" relative w-[200px] h-[300px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[250px] lg:h-[350px]"
         >
             <div 
                 onClick={()=>onRemove(type, ID)}
