@@ -106,22 +106,22 @@ const MovieDetails = () => {
                         <div className="gap-y-3 flex flex-col justify-around m-10">
                             <h2 className="text-2xl">{MovieDetails.title}</h2>
                             <h3 className="flex">{stars}</h3>
-                            <div className="flex">
                             <div className='flex'>
-                            {MovieDetails.genres.map((item, index) => {
-                                return (
-                                <p 
-                                    className="mr-2"
-                                    key={item.name}>
-                                    {item.name}
-                                    {index !== MovieDetails.genres.length - 1 ? ', ' : ''}
-                                </p>
-                                );
-                            })}
-                            </div>
+                                {MovieDetails.genres.map((item, index) => {
+                                    return (
+                                    <p 
+                                        className="mr-2"
+                                        key={item.name}>
+                                        {item.name}
+                                        {index !== MovieDetails.genres.length - 1 ? ', ' : ''}
+                                    </p>
+                                    );
+                                })}
                             </div>
                             <div>
-                                <p>{MovieDetails.overview}</p>
+                                {MovieDetails.overview.length > 0 &&
+                                    <p>{MovieDetails.overview}</p>
+                                }
                             </div>
                             <WatchList param={param} type="movies"/>
                         </div>

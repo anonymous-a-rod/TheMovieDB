@@ -4,8 +4,8 @@ export default function Production({info, head}) {
     console.log(info); 
   return (
     <div className='my-10 max-w-6xl mx-auto'>
-        <h3 className='text-3xl mb-10 w-full capitalize ml-10'>{head}</h3>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-2 mx-10 items-center'>
+        <h3 className='text-3xl mb-10 w-full capitalize ml-0 text-center sm:text-start sm:ml-10'>{head}</h3>
+        <div className='grid grid-cols-1 items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-2 mx-10'>
         {info.length > 0 &&
             info.map((item)=>{
                 return (item.logo_path !== null)? 

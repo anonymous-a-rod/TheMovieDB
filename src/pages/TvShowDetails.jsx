@@ -98,30 +98,38 @@ const TvShowDetails = () => {
 
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="flex flex-col justify-start items-start m-10 md:flex-row mt-20">
+                    <div className="flex flex-col justify-center items-center m-10 md:flex-row mt-20">
                         <img
                             src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
                             alt={showDetails.name}
-                            className="w-52 h-62 object-cover sm:w-72 sm:h-82 m-auto"
+                            className="w-52 h-62 object-cover sm:w-72 sm:h-82"
                         />
-                        <div className="gap-y-3 flex flex-col justify-around m-10">
+                        <div className="gap-y-3 flex flex-col justify-around m-10 w-full sm:w-auto">
                             <h2 className="text-2xl">{showDetails.name}</h2>
                             <h3 className="flex">{stars}</h3>
                             <div className='flex'>
-                            {showDetails.genres.map((item, index) => {
-                                return (
-                                <p 
-                                    className="mr-2"
-                                    key={item.name}>
-                                    {item.name}
-                                    {index !== showDetails.genres.length - 1 ? ', ' : ''}
-                                </p>
-                                );
-                            })}
+                                {showDetails.genres.map((item, index) => {
+                                    return (
+                                    <p 
+                                        className="mr-2"
+                                        key={item.name}>
+                                        {item.name}
+                                        {index !== showDetails.genres.length - 1 ? ', ' : ''}
+                                    </p>
+                                    );
+                                })}
                             </div>
-                            <p>{showDetails.seasons.length} Seasons</p>
-                            <p>{showDetails.overview}</p>
-                            <p>{showDetails.type}</p>
+                            <div className="flex flex-col gap-y-3">
+                                {showDetails.seasons.length > 0 &&
+                                    <p>{showDetails.seasons.length} Seasons</p>
+                                }
+                                {showDetails.overview.length > 0 &&
+                                    <p>{showDetails.overview}</p>
+                                }
+                                {showDetails.type.length > 0 &&
+                                    <p>{showDetails.type}</p>
+                                }
+                            </div>
                             <WatchList param={param} type="tvshows" />
                         </div>
                     </div>
