@@ -9,7 +9,7 @@ import Recommendations from "../components/Recommendations";
 import Production from "../components/Production";
 import DetailsTable from "../components/DetailsTable";
 import WatchList from "../components/WatchList";
-import { BsBoxArrowDown, BsBoxArrowUp } from 'react-icons/bs';
+
 
 const MovieDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ const MovieDetails = () => {
     const [credits, setCredits] = useState(null);
     const [recommendations, setRecommendations] = useState(null);
     const [similar, setSimilar] = useState(null);
-    const [showMore, setShowMore] = useState(true);
+
 
     const param = useParams().id;
 
@@ -123,20 +123,7 @@ const MovieDetails = () => {
                             <div>
                                 {MovieDetails.overview.length > 0 &&
                                     <div className="relative my-5">
-                                        <p className={`${(showMore)?'h-12 overflow-hidden':'h-auto'}`}>{MovieDetails.overview}</p>
-                                        {<div className={(MovieDetails.overview.length > 120)?'':'hidden'}>
-                                            {(!showMore)?
-                                                <BsBoxArrowUp  
-                                                    onClick={()=>setShowMore(!showMore)} 
-                                                    className='w-5 h-5 mr-5 cursor-pointer absolute right-0 bottom-[-25px]' 
-                                                />
-                                            :
-                                                <BsBoxArrowDown 
-                                                    onClick={()=>setShowMore(!showMore)} 
-                                                    className='w-5 h-5 mr-5  cursor-pointer absolute right-0 bottom-[-25px]'
-                                                />
-                                            }
-                                        </div>}
+                                        <p >{MovieDetails.overview}</p> 
                                     </div>
                                 }
                             </div>
