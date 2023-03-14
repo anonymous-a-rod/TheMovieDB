@@ -16,7 +16,10 @@ const Movies = () => {
         try{
             fetch(`${`https://api.themoviedb.org/3/movie/popular?api_key=09cbcde820a19e4959494fa25a97a645&page=${page}`}`)
             .then((response) => response.json())
-            .then((data) => setSelections(data.results))
+            .then((data) => {
+                setSelections(data.results)
+                console.log(data)
+            })
 
         } catch(error){
             console.log(error)
@@ -31,14 +34,13 @@ const Movies = () => {
       }
 
 
-
     return ( 
         <>
         <section className="max-w-6xl mx-auto">
             { loading && <Spinner /> }
             <h1 className="text-6xl w-full text-center my-10">Popular Movies</h1>
             { !loading && selections && 
-            <div className="flex flex-wrap justify-center items-center gap-6 mb-10">
+            <div className="grid grid-cols-1 gap-8 mb-2 items-center justify-items-center sm:grid-cols-2 lg:grid-cols-4">
             { selections?.length > 0 && selections.map((selection)=>
                 (
                     <div key={selection.id}>

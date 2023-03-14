@@ -40,10 +40,10 @@ const Recommendations = ({info, title, videoType="movie"}) => {
         setScrollPosition(container.scrollLeft - containerWidth); 
       };
 
-      console.log(info)
+    //   console.log(info)
     return ( 
         <div className="my-6 max-w-6xl mx-auto">
-            <h3 className={"text-3xl my-4"}>{title}</h3>
+            <h3 className={"text-3xl my-4 text-center sm:text-left"}>{title}</h3>
             <div className="relative">
             <div className="flex overflow-scroll gap-2" id={type === "recommendations"? 'recommendations' : "similar"} onScroll={()=>handleScroll()}>
                 {
@@ -73,8 +73,16 @@ const Recommendations = ({info, title, videoType="movie"}) => {
                         )
                     })
                 }
-                <BsFillArrowRightSquareFill className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} onClick={()=>handleScrollRight()} />
-                <BsFillArrowLeftSquareFill className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} onClick={()=>handleScrollLeft()} />
+                {info.length >= 7 &&
+                    <BsFillArrowRightSquareFill 
+                    className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} 
+                    onClick={()=>handleScrollRight()} />
+                }
+
+                <BsFillArrowLeftSquareFill 
+                className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} 
+                onClick={()=>handleScrollLeft()} />
+
             </div>
             </div>
         </div>

@@ -36,7 +36,7 @@ const Search = () => {
                 <h1 className="text-6xl w-full text-center my-10 capitalize">{param && param.replaceAll("+", " ")}</h1>
                 { loading && <Spinner /> }
                 { !loading && selections && 
-                <div className="flex flex-wrap justify-center items-center lg:grid-cols-4 gap-8 mb-10">
+                <div className="grid grid-cols-1 gap-8 mb-2 items-center justify-items-center sm:grid-cols-2 lg:grid-cols-4">
                 { selections?.length > 0 && selections.map((selection)=>
                     (
                         <>
