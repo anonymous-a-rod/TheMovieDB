@@ -32,16 +32,17 @@ const SelectionCard = ({selection}) => {
                 {stars}
             </div>
             <img
-                src={`https://image.tmdb.org/t/p/original${selection.poster_path}`}
+                src={selection.poster_path !== null?`https://image.tmdb.org/t/p/original${selection.poster_path}`:'/assets/CINETRAIL.png'}
                 alt={selection.title}
-                className="w-full h-full object-cover"
+                className={selection.poster_path !== null?"w-full h-full object-cover":'object-center'}
             />
             <div className="absolute bottom-0 z-10 bg-black w-full bg-opacity-0 transition-opacity duration-300 group-hover:bg-opacity-70">
                 <h4 className="p-2 py-4 font-semibold text-xl text-center text-white text-opacity-0 group-hover:text-opacity-100">{selection.title ? selection.title : selection.name}</h4>
             </div>
+            <div className={selection.poster_path === null?'absolute bottom-28 left-1/2 -translate-x-1/2 rounded-md p-2 w-full':'hidden'}>
+                <p className="text-xl uppercase text-center text-black font-mono">{selection.name}</p>
+            </div>
         </article>
-
-
      );
 }
  

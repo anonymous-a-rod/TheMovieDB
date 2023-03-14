@@ -9,6 +9,7 @@ import Recommendations from "../components/Recommendations";
 import Production from "../components/Production";
 import DetailsTable from "../components/DetailsTable";
 import WatchList from "../components/WatchList";
+import { BsBoxArrowDown, BsBoxArrowUp } from 'react-icons/bs';
 
 const TvShowDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -23,6 +24,7 @@ const TvShowDetails = () => {
     const [credits, setCredits] = useState(null);
     const [recommendations, setRecommendations] = useState(null);
     const [similar, setSimilar] = useState(null);
+    const [showMore, setShowMore] = useState(true);
 
     const param = useParams().id;
 
@@ -100,9 +102,9 @@ const TvShowDetails = () => {
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col justify-center items-center m-10 md:flex-row mt-20">
                         <img
-                            src={`https://image.tmdb.org/t/p/original${showDetails.poster_path}`}
+                            src={showDetails.poster_path !== null?`https://image.tmdb.org/t/p/original${showDetails.poster_path}`:'/assets/CINETRAIL.png'}
                             alt={showDetails.name}
-                            className="w-52 h-62 object-cover sm:w-72 sm:h-82"
+                            className={showDetails.poster_path !== null?"w-52 h-62 object-cover sm:w-72 sm:h-82":'object-center bg-white rounded-md'}
                         />
                         <div className="gap-y-3 flex flex-col justify-around m-10 w-full sm:w-auto">
                             <h2 className="text-2xl">{showDetails.name}</h2>
@@ -124,7 +126,22 @@ const TvShowDetails = () => {
                                     <p>{showDetails.seasons.length} Seasons</p>
                                 }
                                 {showDetails.overview.length > 0 &&
-                                    <p>{showDetails.overview}</p>
+                                <div className="relative my-5">
+                                    <p className={`${(showMore)?'h-12 overflow-hidden':'h-auto'}`}>{showDetails.overview}</p>
+                                    {<div className={(showDetails.overview.length > 120)?'':'hidden'}>
+                                    {(!showMore)?
+                                        <BsBoxArrowUp  
+                                            onClick={()=>setShowMore(!showMore)} 
+                                            className='w-5 h-5 mr-5 cursor-pointer absolute right-0 bottom-[-25px]' 
+                                        />
+                                    :
+                                        <BsBoxArrowDown 
+                                            onClick={()=>setShowMore(!showMore)} 
+                                            className='w-5 h-5 mr-5  cursor-pointer absolute right-0 bottom-[-25px]'
+                                        />
+                                    }
+                                    </div>}
+                                </div>
                                 }
                                 {showDetails.type.length > 0 &&
                                     <p>{showDetails.type}</p>
