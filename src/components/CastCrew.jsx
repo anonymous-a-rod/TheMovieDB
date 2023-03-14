@@ -11,8 +11,8 @@ const CastCrew = ({info, title, showMoreInfo}) => {
 
     return ( 
         <div className={(info.length >= 0)?'relative my-10 max-w-6xl mx-auto':'hidden'} ref={containerRef}>
-            <h3 className={"text-3xl mb-10 w-full text-center capitalize ml-0 sm:text-left sm:ml-10"}>{title}</h3>
-            <div className="ml-12 md:ml-16 lg:ml-32 xl:ml-48 mx-auto max-w-lg md:max-w-4xl min-w-min grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden mb-2 justify-items-start items-start">
+            <h3 className={"text-3xl mb-10 w-full text-center capitalize ml-0 md:text-left md:ml-10"}>{title}</h3>
+            <div className="ml-8 sm:ml-16 md:ml-16 lg:ml-36 xl:ml-48 mx-auto max-w-lg md:max-w-4xl min-w-min grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden mb-2 justify-items-start items-start">
             {info.map((item, index) => {
                 if (!showMore && index > 3) {
                 return <></>;

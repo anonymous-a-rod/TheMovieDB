@@ -29,7 +29,7 @@ const SearchFilter = () => {
                 onKeyDown={handleInputKeyDown}
             />
             <button 
-                className="absolute right-[18px] top-[8px]"
+                className="absolute right-[6px] sm:right-[18px] top-[8px]"
                 onClick={handleSearchSubmit}
             >
                 <FaSearch className="text-black"/>

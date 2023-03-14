@@ -77,7 +77,7 @@ const Header = () => {
                   className="block px-6 py-1 text-center bg-black bg-opacity-95 text-gray-300 font-semibold border border-gray-700"
                   onClick={toggleMenu}
               >
-                  <p className="text-center">Shows</p>
+                  <p className="text-center">TV Shows</p>
               </Link>
               <Link
                   to="/movies"
