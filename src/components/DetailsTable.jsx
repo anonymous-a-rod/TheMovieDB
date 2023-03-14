@@ -26,7 +26,7 @@ export default function DetailsTable({item, title}) {
                 </tr>
                 <tr>
                   <td className="w-1/2 py-2">Rating:</td>
-                  <td className="w-1/2 py-2 text-right">{item.vote_average.toFixed(1)}/10</td>
+                  <td className="w-1/2 py-2 text-right">{item.vote_average.toFixed(1) === "0.0"? "No rating" : `${item.vote_average.toFixed(1)}/10` }</td>
                 </tr>
                 {(item.budget === 0 || item.budget === "0") &&
                 <tr>

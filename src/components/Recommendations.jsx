@@ -75,12 +75,12 @@ const Recommendations = ({info, title, videoType="movie"}) => {
                 }
                 {info.length >= 7 &&
                     <BsFillArrowRightSquareFill 
-                    className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} 
+                    className={showRight ? "absolute right-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 sm:w-20" : "hidden"} 
                     onClick={()=>handleScrollRight()} />
                 }
 
                 <BsFillArrowLeftSquareFill 
-                className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 w-20" : "hidden"} 
+                className={showLeft ? "absolute left-5 top-1/2 -translate-y-1/2 z-20 w-0 h-0 text-red-700 text-opacity-80 cursor-pointer hover:opacity-90 sm:h-20 sm:selection:w-20" : "hidden"} 
                 onClick={()=>handleScrollLeft()} />
 
             </div>

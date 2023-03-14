@@ -26,7 +26,7 @@ const SelectionCard = ({selection}) => {
     return ( 
         <article
             onClick={() => navigate(`../${selection.title ? "movie-details" : "tv-show-details"}/${selection.id}`)}
-            className=" relative w-[200px] h-[300px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[250px] lg:h-[350px]"
+            className="ease-in-out duration-300 relative w-[200px] h-[300px] bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer group lg:w-[250px] lg:h-[350px]"
         >
             <div className="absolute pt-2 pl-2 hidden group-hover:flex ">
                 {stars}

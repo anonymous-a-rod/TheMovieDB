@@ -150,7 +150,7 @@ const TvShowDetails = () => {
                             <WatchList param={param} type="tvshows" />
                         </div>
                     </div>
-                    {ReviewDetails?.results.length > 0 &&
+                    {(ReviewDetails?.results.length > 0) &&
                     <div className="mx-auto max-w-6xl relative">
                         <h3 className={(ReviewDetails?.results.length > 0)?"text-center text-3xl":'hidden'}>Reviews</h3>
                         <div className="mx-10 mt-10" >
@@ -170,7 +170,7 @@ const TvShowDetails = () => {
                         </div>
                     </div>
                     }
-                    {!ReviewDetails?.results.length > 0 &&
+                    {(!ReviewDetails?.results.length > 0) &&
                     <p className="flex justify-center items-start text-4xl mt-20 mb-32">No Reviews</p>
                     }
                 </div>
@@ -191,7 +191,7 @@ const TvShowDetails = () => {
                         />
                     }
 
-                    { recommendations?.length &&
+                    { recommendations?.length > 0 &&
                        <Recommendations info={recommendations} title="Recommendations" videoType="tv-shows" /> 
                     }
 
