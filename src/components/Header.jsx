@@ -88,9 +88,10 @@ const Header = () => {
               </Link>
             <button
               className="px-4 py-1 text-white font-semibold rounded-b-sm bg-red-700 h-[30px]"
-              onClick={() =>
-                navigate(pageState === "Sign in" ? "/signin" : "/profile")
-              }>
+              onClick={() => {
+                navigate(pageState === "Sign in" ? "/signin" : "/profile");
+                toggleMenu(); 
+              }}>
               {pageState}
             </button>
           </div>
