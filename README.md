@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [Overview](#overview)
-  - [Links](#links)
+- [Links](#links)
 - [Authors](#authors)
 
 ## Overview
